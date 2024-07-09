@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/reset.css">
+    <link rel="stylesheet" href="assets/css/style-registro.css">
+    <title>registro</title>
+</head>
+
+<body>
+    <h1 class="title">Estacionamento Virtual</h1>
+    <main id="adicionar-veiculo">
+
+        <section id="lateral">
+            <section class="entrada">
+                <H1>ENTRADA:</H1>
+                <aside class="placa">
+                    <label for="placa">PLACA:</label>
+                    <input type="text" id="placa" placeholder="Digite a placa">
+                </aside>
+                <aside class="carro">
+                    <label for="carro">CARRO:</label>
+                    <input type="text" id="carro" placeholder="Digite o modelo">
+                </aside>
+                <button>Adicionar</button>
+            </section>
+            <section class="saida">
+                <H1>SAIDA:</H1>
+                <aside class="placa">
+                    <label for="placa">PLACA:</label>
+                    <input type="text" id="placa" placeholder="Digite a placa">
+                </aside>
+                <button>Saida</button>
+            </section>
+            <section class="valor">
+                <aside >
+                    <H1>VALOR:</H1>
+                    <H3 id="valor"> </H3>
+                </aside>
+            </section>
+        </section>
+        <section class="veiculos-registrados">
+        <section >
+            <aside class="topo">
+                <section class="vagas">
+                    <h4>Vagas <br> disponiveis</h4>
+                    <h3 id="vagas"> </h3>
+                </section>
+                <section id="data">
+                    <h4>data</h4> <!--  apagar depois -->
+                    <h3 id="data"> </h3>
+                </section>
+            </aside>
+        </section>
+
+        <section id="historico">
+            <table>
+                <tr>
+                    <th>PLACA</th>
+                    <th>CARRO</th>
+                    <th>ENTRADA</th>
+                </tr>
+            </table>
+        </section>
+    </section>
+    </main>
+</body>
+
+</html>
