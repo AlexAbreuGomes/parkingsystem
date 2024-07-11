@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/reset.css">
+    <link rel="stylesheet" href="assets/css/style-registro.css">
+    <title>registro</title>
+</head>
+
+<body>
+    <h1 class="title">Estacionamento Virtual</h1>
+    <main id="adicionar-veiculo">
+
+        <section id="lateral">
+            <section class="placa-entrada">
+                <H1>ENTRADA:</H1>
+                <aside class="placa">
+                    <label for="placa">PLACA:</label>
+                    <input type="text" id="placa" placeholder="Digite a placa">
+                </aside>
+                <aside class="placa-carro">
+                    <label for="carro">CARRO:</label>
+                    <input type="text" id="carro" placeholder="Digite o modelo">
+                </aside>
+                <button id="adicionar-carro">Adicionar</button>
+            </section>
+            <section class="saida">
+                <H1>SAIDA:</H1>
+                <aside class="placa">
+                    <label for="placa">PLACA:</label>
+                    <input type="text" id="placa" placeholder="Digite a placa">
+                </aside>
+                <button id="remover-carro">Saida</button>
+            </section>
+            <section class="valor">
+                <aside>
+                    <H1>VALOR:</H1>
+                    <H3 id="valor"> </H3>
+                </aside>
+            </section>
+        </section>
+
+        <section class="veiculos-registrados">
+            <section>
+                <aside class="topo">
+                    <section class="vagas">
+                        <h4>Vagas <br> disponiveis: <span id="vaga"></span></h4>
+                    </section>
+                    <section class="data">
+                        <data> <!--  apagar depois -->
+                            <h4 id="data"> </h4>
+                            <h4 id="hora"> </h4>
+                        </data>
+                    </section>
+                </aside>
+            </section>
+
+            <section id="historico">
+                <table id="tabela">
+                    <tr>
+                        <th>PLACA</th>
+                        <th>CARRO</th>
+                        <th>ENTRADA</th>
+                    </tr>
+                </table>
+            </section>
+        </section>
+    </main>
+
+
+    <script>
+
+
+
+        let numVagas = 20;
+
+        document.getElementById("adicionar-carro").addEventListener("click", function () {
+            adicionarCarro();
+        });
+
+        document.getElementById("remover-carro").addEventListener("click", function () {
+            removerCarro();
+        });
+
+        function adicionarCarro() {
+            const placa = document.getElementById("placa").value;
+            const carro = document.getElementById("carro").value;
+            const entrada = new Date().toLocaleString();
+
+            if (numVagas > 0) {
+                numVagas--;
+                document.getElementById("vaga").textContent = numVagas.toString();
+
+                const tabela = document.getElementById("tabela");
+                const row = tabela.insertRow(-1);
+                const cellPlaca = row.insertCell(0);
+                const cellCarro = row.insertCell(1);
+                const cellEntrada = row.insertCell(2);
+
+                cellPlaca.textContent = placa;
+                cellCarro.textContent = carro;
+                cellEntrada.textContent = entrada;
+            } else {
+                alert("Não há mais vagas disponíveis.");
+            }
+        }
+
+        function removerCarro() {
+            if (numVagas < 20) {
+                numVagas++;
+                document.getElementById("vaga").textContent = numVagas.toString();
+
+                const tabela = document.getElementById("tabela");
+                const rows = tabela.rows;
+
+                // Percorre as linhas da tabela em ordem decrescente
+                for (let i = rows.length - 1; i > 0; i--) {
+                    const row = rows[i];
+                    const cellPlaca = row.cells[0];
+                    const placa = cellPlaca.textContent;
+
+                    // Verifica se a placa da linha atual corresponde à placa do veículo a ser removido
+                    if (placa === document.getElementById("placa").value) {
+                        row.parentNode.removeChild(row);
+                        break;
+                    }
+                }
+            }
+        }
+
+
+
+
+
+        function capturarData() {
+            const diasDaSemana = ["Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado"];
+            const data = new Date();
+            const diaSemana = diasDaSemana[data.getDay()];
+            const dia = data.getDate().toString().padStart(2, '0');
+            const mes = data.getMonth() + 1;
+            const ano = data.getFullYear();
+            const dataAtual = `${diaSemana}, ${dia}/${mes}/${ano}`;
+            document.getElementById("data").textContent = dataAtual;
+        }
+
+        // Função para capturar a hora atual
+        function capturarHora() {
+            // Obtenha a data atual
+            const data = new Date();
+            // Obtenha a hora atual
+            const hora = data.getHours();
+            // Obtenha os minutos atual
+            const minutos = data.getMinutes().toString().padStart(2, '0');
+            // Obtenha os segundos atual e adicione o zero à esquerda se necessário
+            const segundos = data.getSeconds().toString().padStart(2, '0');
+            // Crie a string com a hora atual no formato HH:MM:SS
+            const horaAtual = `${hora}:${minutos}:${segundos}`;
+            // Insira a hora atual na etiqueta com o ID "hora"
+            document.getElementById("hora").textContent = horaAtual;
+        }
+
+        setInterval(capturarData, 1000);
+        setInterval(capturarHora, 1000);
+    </script>
+</body>
+
+</html>
