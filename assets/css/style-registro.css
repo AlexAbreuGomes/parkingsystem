@@ -4,6 +4,7 @@ body {
     font-family: 'Poppins', sans-serif;
     color: #383D3B;
     background-color: #52DEE5;
+
 }
  
 .title {
@@ -21,6 +22,7 @@ main {
     justify-content: center;
     height: 65%;
     width: 100%;
+
     position:absolute;
     top:0;
     left:0;
@@ -57,18 +59,21 @@ main {
 
 .veiculos-registrados {
     display: flex;
+
     flex-direction: column;
     text-align: center;
     gap: 10px;
     width: 400px;
     height: 100%;
     border: 1px solid #ec0202;
+
 }
 
 .topo {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
+
     justify-content:space-between;
     text-align: center;
     margin-top: 50px;
@@ -105,6 +110,7 @@ main {
     border-radius: 20px;
     background-color: #EEE5E9;
 }
+
 
 
 
