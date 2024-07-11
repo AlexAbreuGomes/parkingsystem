@@ -21,7 +21,7 @@
                     <label for="placa">PLACA:</label>
                     <input type="text" id="placa" placeholder="Digite a placa">
                 </aside>
-   <aside class="placa-carro">
+                <aside class="placa-carro">
                     <label for="carro">CARRO:</label>
                     <input type="text" id="carro" placeholder="Digite o modelo">
                 </aside>
@@ -61,12 +61,12 @@
                 </aside>
             </section>
 
-            <section id="historico">
+            <section id="tabela-veiculos">
                 <table id="tabela">
                     <tr>
-                        <th>PLACA</th>
-                        <th>CARRO</th>
-                        <th>ENTRADA</th>
+                        <th>PLACA:</th>
+                        <th>CARRO:</th>
+                        <th>ENTRADA:</th>
                     </tr>
                 </table>
             </section>
@@ -139,10 +139,13 @@
 
 
         function capturarData() {
-            const diasDaSemana = ["Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado"];
+            const diasDaSemana = [
+                "Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira",
+                "Quinta-feira", "Sexta-feira", "Sábado"
+            ];
             const data = new Date();
             const diaSemana = diasDaSemana[data.getDay()];
-            const dia = data.getDate().toString().padStart(2, '0');
+            const dia = data.getDate();
             const mes = data.getMonth() + 1;
             const ano = data.getFullYear();
             const dataAtual = `${diaSemana}, ${dia}/${mes}/${ano}`;
@@ -154,7 +157,7 @@
             // Obtenha a data atual
             const data = new Date();
             // Obtenha a hora atual
-            const hora = data.getHours();
+            const hora = data.getHours().toString().padStart(2, '0');;
             // Obtenha os minutos atual
             const minutos = data.getMinutes().toString().padStart(2, '0');
             // Obtenha os segundos atual e adicione o zero à esquerda se necessário
