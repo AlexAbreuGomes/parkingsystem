@@ -20,14 +20,6 @@ section {
     display: flex;
     align-items: flex-start;
     justify-content: center;
-    height:75%;
-    width: 100%;
-    position:absolute;
-    top:0;
-    left:0;
-    right:0;
-    bottom:0;
-    margin:auto;
 }
 
 #lateral {
@@ -37,7 +29,7 @@ section {
     justify-content: flex-start;
     width: 250px;
     height: 100%;
-    border: 1px solid #383D3B;
+    
 }
 
 #lateral h2 {
@@ -47,8 +39,7 @@ section {
     justify-content: center;
     text-align: start;
     width: 100%;
-    height: 100px;
-    
+    height: 100px;    
 }
 
 #entradaForm, #saidaForm, #valorPago{
@@ -83,6 +74,7 @@ input {
     font-weight: bold;
     cursor: pointer;
 }
+
 
 
 
