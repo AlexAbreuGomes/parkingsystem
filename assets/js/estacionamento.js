@@ -21,6 +21,8 @@ saidaForm.addEventListener('submit', (event) => {
     event.preventDefault();
     const saidaPlaca = document.getElementById('saidaPlaca').value;
     registrarSaida(saidaPlaca);
+
+    saidaForm.reset();
 });
 
 

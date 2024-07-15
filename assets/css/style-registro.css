@@ -6,6 +6,15 @@ body {
     background-color: #52DEE5;
 
 }
+
+main {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100vh;
+}
  
 .title {
     display: flex;
@@ -26,20 +35,17 @@ section {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
-    width: 250px;
-    height: 100%;
+    justify-content: start;
+    width: 270px;
+    height: 700px;
+    border: 1px solid #383D3B;
     
 }
 
 #lateral h2 {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    text-align: start;
     width: 100%;
-    height: 100px;    
+    margin: 10px 0 10px 0;
+    text-align: start;  
 }
 
 #entradaForm, #saidaForm, #valorPago{
@@ -48,24 +54,25 @@ section {
     align-items: flex-start;
     justify-content: center;
     width: 100%;
-    border: 1px solid #383D3B;
+    margin-bottom: 10px;
+    
 }
 
 label {
-    width: 60%;
+    width: 160%;
     text-align: start;
     font-weight: bold;
 }
 
 input {
-    width: 60%;
+    width: 160px;
     height: 30px;
     border-radius: 20px;
     border: none;
 }
 
 .submit {
-    width: 60%;
+    width: 160px;
     height: 30px;
     border-radius: 20px;
     border: none;
@@ -74,6 +81,58 @@ input {
     font-weight: bold;
     cursor: pointer;
 }
+
+.listaVeiculosValor {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#veiculos-registrados {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 500px;
+    height: 500px;
+    border: 1px solid #383D3B;
+}
+
+#tabelaEstacionados {
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+}
+.valor {
+   display: flex;
+   flex-direction: column;
+   justify-content: flex-start;
+   align-items: end;
+   width: 500px;
+   height: 200px;
+   border: 1px solid #383D3B;
+}
+
+.valor h3 {    
+    width: 100%;
+    margin: 10px 0 10px 0;
+    text-align: start;  
+}
+
+.submitPagamento {
+    display: flex;
+    width: 160px;
+    height: 30px;
+    border-radius: 20px;
+    border: none;
+    background-color: #383D3B;
+    color: #52DEE5;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+
 
 
 
