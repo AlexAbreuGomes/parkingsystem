@@ -69,7 +69,7 @@ function registrarSaida(placa) {
 function calcularValorPago(entrada, saida) {
     const diffMs = saida - entrada;
     const diffHoras = Math.ceil(diffMs / (1000 * 60 * 60));
-    return diffHoras * 5; // Exemplo: R$ 5 por hora
+    return diffHoras * 6; // E
 }
 
 function salvarNoRelatorio(veiculo) {
@@ -97,3 +97,35 @@ carregarDados();
 
 });
 
+function capturarData() {
+    const diasDaSemana = [
+        "Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira",
+        "Quinta-feira", "Sexta-feira", "Sábado"
+    ];
+    const data = new Date();
+    const diaSemana = diasDaSemana[data.getDay()];
+    const dia = data.getDate();
+    const mes = data.getMonth() + 1;
+    const ano = data.getFullYear();
+    const dataAtual = `${diaSemana}, ${dia}/${mes}/${ano}`;
+    document.getElementById("data").textContent = dataAtual;
+}
+
+// Função para capturar a hora atual
+function capturarHora() {
+    // Obtenha a data atual
+    const data = new Date();
+    // Obtenha a hora atual
+    const hora = data.getHours().toString().padStart(2, '0');;
+    // Obtenha os minutos atual
+    const minutos = data.getMinutes().toString().padStart(2, '0');
+    // Obtenha os segundos atual e adicione o zero à esquerda se necessário
+    const segundos = data.getSeconds().toString().padStart(2, '0');
+    // Crie a string com a hora atual no formato HH:MM:SS
+    const horaAtual = `${hora}:${minutos}:${segundos}`;
+    // Insira a hora atual na etiqueta com o ID "hora"
+    document.getElementById("hora").textContent = horaAtual;
+}
+
+setInterval(capturarData, 1000);
+setInterval(capturarHora, 1000);
