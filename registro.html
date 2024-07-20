@@ -6,64 +6,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="assets/css/reset.css">
     <link rel="stylesheet" href="assets/css/style-registro.css">
-    
     <title>registro</title>
 </head>
 
 <body>
-    <main>
-    <aside id="lateral">
-    <h2>Entrada de Veículos:</h2>
-    <form id="entradaForm">
-        <label for="placa">Placa:</label>
-        <input type="text" id="placa" name="placa" required><br>
-        <label for="veiculo">Veículo:</label>
-        <input type="text" id="veiculo" name="veiculo" required><br>
-        <input type="hidden" id="entrada" name="entrada">
-        <button class="submit" type="submit">Adicionar</button>
-    </form>
-
-    <h2>Saída de Veículos:</h2>
-    <form id="saidaForm">
-        <label for="saidaPlaca">Placa:</label>
-        <input type="text" id="saidaPlaca" name="saidaPlaca" required><br>
-        <button class="submit" type="submit">Registrar Saída</button>
-    </form>
-    
-    </form>
-
-</aside>
-<main class="listaVeiculosValor">
-<aside id="veiculos-registrados">
-    <h2>Veículos Estacionados</h2>
-    <table id="tabelaEstacionados">
-        <thead>
-            <tr>
-                <th>Placa</th>
-                <th>Veículo</th>
-                <th>Entrada</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
-    
-</aside>
-<section class="valor">
-        <h3>Valor a pagar:</h3>
-        <h2> </h2>
-        <button class="submitPagamento" type="submit">Registrar Pagamento</button>
-    </section>
-</main>
-<section id="">
-
-</section>
-<a href="relatorio.html" target="_blank">Ver Relatório</a>
-</main>
-    
+    <main class="container">
+        <section id="lateral">
+            <h2>Entrada de Veículos:</h2>
+            <form id="entradaForm">
+                <label for="placa">Placa:</label>
+                <input type="text" id="placa" name="placa" required>
+                <label for="veiculo">Veículo:</label>
+                <input type="text" id="veiculo" name="veiculo" required>
+                <input type="hidden" id="entrada" name="entrada">
+                <button class="submit" type="submit">Adicionar</button>
+            </form>
+            <h2>Saída de Veículos:</h2>
+            <form id="saidaForm">
+                <label for="saidaPlaca">Placa:</label>
+                <input type="text" id="saidaPlaca" name="saidaPlaca" required>
+                <button class="submit" type="submit">Registrar Saída</button>
+            </form>
+        </section>
+        <section class="listaVeiculosValor">
+            <aside id="veiculos-registrados">
+                <h2>Veículos Estacionados</h2>
+                <table id="tabelaEstacionados">
+                    <thead>
+                        <tr>
+                            <th>Placa</th>
+                            <th>Veículo</th>
+                            <th>Entrada</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </aside>
+            <section class="valor">
+                <h3>Valor a pagar:</h3>
+                <h2></h2>
+                <button class="submitPagamento" type="submit">Registrar Pagamento</button>
+            </section>
+        </section>
+        <a href="relatorio.html" target="_blank">Ver Relatório</a>
+    </main>
     <script src="assets/js/estacionamento.js"></script>
-
 </body>
-</html>
 
-   
+</html>
