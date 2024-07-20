@@ -6,29 +6,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="assets/css/reset.css">
     <link rel="stylesheet" href="assets/css/style-registro.css">
+
     <title>registro</title>
 </head>
 
 <body>
-    <main class="container">
-        <section id="lateral">
+
+
+    <main class="principal">
+        <aside id="lateral">
             <h2>Entrada de Veículos:</h2>
             <form id="entradaForm">
                 <label for="placa">Placa:</label>
-                <input type="text" id="placa" name="placa" required>
+                <input type="text" id="placa" name="placa" required><br>
                 <label for="veiculo">Veículo:</label>
-                <input type="text" id="veiculo" name="veiculo" required>
+                <input type="text" id="veiculo" name="veiculo" required><br>
                 <input type="hidden" id="entrada" name="entrada">
                 <button class="submit" type="submit">Adicionar</button>
             </form>
+
+
             <h2>Saída de Veículos:</h2>
             <form id="saidaForm">
                 <label for="saidaPlaca">Placa:</label>
-                <input type="text" id="saidaPlaca" name="saidaPlaca" required>
+                <input type="text" id="saidaPlaca" name="saidaPlaca" required><br>
                 <button class="submit" type="submit">Registrar Saída</button>
             </form>
-        </section>
-        <section class="listaVeiculosValor">
+
+            </form>
+
+        </aside>
+        <main class="listaVeiculosValor">
+            <section class="vagas">
+                <section class="vagas-disponiveis">
+                    <h3>Vagas Disponíveis:</h3>
+                    <h3 id="vaga">Nº</h3>
+                </section>
+                <data id="data-hora">
+                    <h2 id="hora"></h2>
+                    <h4 id="data"></h4>
+                </data>
+            </section>
+
             <aside id="veiculos-registrados">
                 <h2>Veículos Estacionados</h2>
                 <table id="tabelaEstacionados">
@@ -42,15 +61,21 @@
                     <tbody>
                     </tbody>
                 </table>
+
             </aside>
             <section class="valor">
                 <h3>Valor a pagar:</h3>
-                <h2></h2>
+                <h2> </h2>
                 <button class="submitPagamento" type="submit">Registrar Pagamento</button>
             </section>
+        </main>
+        <section id="">
+
         </section>
         <a href="relatorio.html" target="_blank">Ver Relatório</a>
     </main>
+
+
     <script src="assets/js/estacionamento.js"></script>
 </body>
 
