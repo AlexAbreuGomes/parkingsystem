@@ -149,7 +149,6 @@ a {
     border-radius: 10px;
     border: 1px solid #383D3B;
     box-shadow: 0 0 10px #383D3B;
-  
 }
 
 .vagas-disponiveis {
@@ -172,15 +171,16 @@ a {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: center;
     width: 600px;
     height: 600px;
     border: 1px solid #383D3B;
     background-color: #EEE5E9;
     border-radius: 10px;
     box-shadow: 0 0 10px #383D3B;
-    overflow-y: scroll;
-    position: relative;
+    overflow-y:auto;
+    
+    
     
 }
 
@@ -206,11 +206,11 @@ a {
 }
 
 #tabelaEstacionados {
-    width: 95%;
+    width: 98%;
     height: 90%;
     text-align: center;
     border-collapse: collapse;
-    overflow-y:auto;
+    
     border-radius: 10px;
     box-shadow: 0 0 10px #383D3B;
 }
@@ -245,12 +245,13 @@ tr:last-child td:last-child {
 
 .valor {
     position: relative;
-    width: 600px; /* Ajuste o tamanho conforme necessário */
+    min-width: 600px; /* Adicionado para travar o tamanho em 600px */
     height: 200px; /* Ajuste o tamanho conforme necessário */
     border: 1px solid #000; /* Apenas para visualização */
     padding:5px; /* Apenas para visualização */
     border-radius: 10px;
     background-color: #EEE5E9;
+    
 }
 
 .valor > section:last-child > #submitPagamento {

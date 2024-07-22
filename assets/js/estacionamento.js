@@ -85,8 +85,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  console.log(calcularValorPago());
-
   function salvarNoRelatorio(veiculo) {
     let relatorio =
       JSON.parse(localStorage.getItem("relatorioEstacionamento")) || [];

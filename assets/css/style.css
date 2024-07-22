@@ -1,11 +1,39 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
 
 body {
     font-family: 'Poppins', sans-serif;
     color: #383D3B;
+    background-image: url("../img/estacionamento\ copy.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    margin: 0; /* Garante que o corpo ocupe toda a tela */
+    height: 100vh; /* Garante que o corpo ocupe toda a tela */
 }
+
+body::after {
+    content: ''; /* Cria uma pseudo-elemento após a body */
+    position: absolute; /* Define a posição do pseudo-elemento como absoluta */
+    top: 0; /* Define a posição superior do pseudo-elemento */
+    left: 0; /* Define a posição esquerda do pseudo-elemento */
+    width: 100%; /* Define a largura do pseudo-elemento como 100% do body */
+    height: 100%; /* Define a altura do pseudo-elemento como 100% do body */
+    background-color: rgba(82, 222, 229, 0.7); /* Define a cor de fundo com opacidade */
+    mix-blend-mode: normal; /* Define o modo de mesclagem como normal */
+    z-index: -1; /* Define a posição do pseudo-elemento abaixo do conteúdo */
+    pointer-events: none; /* Define que o pseudo-elemento não interfere na interação com o conteúdo */
+}
+/* 
+Aqui, estamos adicionando um pseudo-elemento após a tag <body>. 
+Ele será uma camada transparente que ocupa toda a área da tela e tem uma cor de fundo definada. 
+A cor é definida como rgba(82, 222, 229, 0.9), onde 0.9 é a opacidade. 
+Por favor, observe que a cor é a mesma que a imagem está usando, então a camada ficará sobreposta. 
+O modo de mesclagem é definido como normal, para garantir que a camada não afete a imagem original. 
+A posição do pseudo-elemento é definida como absoluta, com a parte superior esquerda fixada em 0, 
+e a parte inferior direita ocupando toda a área da tela. 
+A posição do pseudo-elemento é definida como -1, para garantir que ele fique atrás do conteúdo. 
+Por fim, a propriedade pointer-events é definida como none, para garantir que a camada não interfere na interação com o conteúdo. 
+*/
 
 #login {
     display: flex;
