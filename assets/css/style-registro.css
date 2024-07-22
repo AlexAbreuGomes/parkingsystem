@@ -3,9 +3,39 @@
 body {
     font-family: 'Poppins', sans-serif;
     color: #383D3B;
-    background-color: #52DEE5;
-
+    background-image: url("../img/estacionamento.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    margin: 0; /* Garante que o corpo ocupe toda a tela */
+    height: 100vh; /* Garante que o corpo ocupe toda a tela */
 }
+
+body::after {
+    content: ''; /* Cria uma pseudo-elemento após a body */
+    position: absolute; /* Define a posição do pseudo-elemento como absoluta */
+    top: 0; /* Define a posição superior do pseudo-elemento */
+    left: 0; /* Define a posição esquerda do pseudo-elemento */
+    width: 100%; /* Define a largura do pseudo-elemento como 100% do body */
+    height: 100%; /* Define a altura do pseudo-elemento como 100% do body */
+    background-color: rgba(82, 222, 229, 0.9); /* Define a cor de fundo com opacidade */
+    mix-blend-mode: normal; /* Define o modo de mesclagem como normal */
+    z-index: -1; /* Define a posição do pseudo-elemento abaixo do conteúdo */
+    pointer-events: none; /* Define que o pseudo-elemento não interfere na interação com o conteúdo */
+}
+/* 
+Aqui, estamos adicionando um pseudo-elemento após a tag <body>. 
+Ele será uma camada transparente que ocupa toda a área da tela e tem uma cor de fundo definada. 
+A cor é definida como rgba(82, 222, 229, 0.9), onde 0.9 é a opacidade. 
+Por favor, observe que a cor é a mesma que a imagem está usando, então a camada ficará sobreposta. 
+O modo de mesclagem é definido como normal, para garantir que a camada não afete a imagem original. 
+A posição do pseudo-elemento é definida como absoluta, com a parte superior esquerda fixada em 0, 
+e a parte inferior direita ocupando toda a área da tela. 
+A posição do pseudo-elemento é definida como -1, para garantir que ele fique atrás do conteúdo. 
+Por fim, a propriedade pointer-events é definida como none, para garantir que a camada não interfere na interação com o conteúdo. 
+*/
+
+
 
 
 .principal  {
@@ -19,6 +49,8 @@ body {
     transform: translate(-50%, -50%);
     width: 100%;
     height: 100vh;
+    gap: 10px;
+    border: 1px solid #383D3B;
 }
  
 .title {
@@ -30,27 +62,25 @@ body {
     background-color: #52DEE5;
 }
 
-section {
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-}
-
 #lateral {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: start;
-    width: 270px;
-    height: 700px;
+    justify-content: flex-start;
+    width: 300px;
+    height: 600px;
+    background-color: #EEE5E9;
+    border-radius: 10px;
     border: 1px solid #383D3B;
-    
+    box-shadow: 0 0 10px #383D3B;
+    margin-top: -120px;
+    gap: 20px;
 }
 
 #lateral h2 {
     width: 100%;
     margin: 10px 0 10px 0;
-    text-align: start;  
+    text-align: center;  
 }
 
 #entradaForm, #saidaForm, #valorPago{
@@ -58,13 +88,11 @@ section {
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
-    width: 100%;
     margin-bottom: 10px;
-    
 }
 
 label {
-    width: 160%;
+    width: 160px;
     text-align: start;
     font-weight: bold;
 }
@@ -72,22 +100,35 @@ label {
 input {
     width: 160px;
     height: 30px;
-    border-radius: 20px;
-    border: none;
+    border-radius: 10px;
+    text-align: center;
 }
 
-.submit {
+.submit, .relatorio, .submitPagamento {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 160px;
     height: 30px;
-    border-radius: 20px;
+    border-radius: 10px;
     border: none;
     background-color: #383D3B;
     color: #52DEE5;
     font-weight: bold;
     cursor: pointer;
+    transition: background-color 0.1s, color 0.1s; /* Transição suave para o efeito hover */
+}
+
+.submit:hover, .relatorio:hover, .submitPagamento:hover {
+    background-color: #52DEE5; /* Cor de fundo ao passar o mouse */
+    color: #383D3B; /* Cor do texto ao passar o mouse */
+}
+
+a {
+    text-decoration: none;
+    color: #52DEE5;
+    font-size: 14px;
+    font-weight: none;
 }
 
 .listaVeiculosValor {
@@ -100,27 +141,22 @@ input {
 
 .vagas {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: space-between;
-    width: 500px;
-    border: 1px solid #383D3B;
-    border-radius: 25px;
+    width: 600px;
+    padding: 10px 10px 10px 10px;
     background-color: #EEE5E9;
+    border-radius: 10px;
+    border: 1px solid #383D3B;
+    box-shadow: 0 0 10px #383D3B;
+  
 }
 
 .vagas-disponiveis {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    text-align: center;
-    margin: 10px 10px 10px 10px;
-    
-}
-
-.vagas-disponiveis h3 {
-
     text-align: start;
-    font-weight: bold;  
 }
 
 #data-hora {
@@ -130,29 +166,97 @@ input {
     justify-content: end;
 }
 
+
+
 #veiculos-registrados {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    width: 500px;
-    height: 500px;
+    width: 600px;
+    height: 600px;
     border: 1px solid #383D3B;
+    background-color: #EEE5E9;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #383D3B;
+    overflow-y: scroll;
+    position: relative;
+    
+}
+
+/* Estilo para a barra de rolagem */
+#veiculos-registrados::-webkit-scrollbar {
+    width: 10px; /* largura da barra de rolagem */
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    
+}
+
+#veiculos-registrados::-webkit-scrollbar-track {
+    width: 5px;
+    background: #EEE5E9; /* cor da trilha da barra de rolagem */
+    border-top-right-radius: 10px; /* radius da trilha */
+    border-bottom-right-radius: 10px;
+}
+
+#veiculos-registrados::-webkit-scrollbar-thumb {
+    background-color:  #383D3B; /* cor do polegar da barra de rolagem */
+    border-radius: 20px; /* radius do polegar */
+    border: 2px solid #EEE5E9; /* borda ao redor do polegar */
 }
 
 #tabelaEstacionados {
-    width: 100%;
-    margin: 0 auto;
+    width: 95%;
+    height: 90%;
     text-align: center;
+    border-collapse: collapse;
+    overflow-y:auto;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #383D3B;
 }
+
+tr{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+}
+
+td {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+    height: 40px;
+    border: 1px solid #383D3B;  
+}
+
+/* Seleciona a última linha da tabela */
+tr:last-child td:first-child {
+    border-bottom-left-radius: 10px; 
+    
+}
+
+tr:last-child td:last-child {
+    border-bottom-right-radius: 10px; 
+}
+
 .valor {
-   display: flex;
-   flex-direction: column;
-   justify-content: flex-start;
-   align-items: end;
-   width: 500px;
-   height: 200px;
-   border: 1px solid #383D3B;
+    position: relative;
+    width: 600px; /* Ajuste o tamanho conforme necessário */
+    height: 200px; /* Ajuste o tamanho conforme necessário */
+    border: 1px solid #000; /* Apenas para visualização */
+    padding:5px; /* Apenas para visualização */
+    border-radius: 10px;
+    background-color: #EEE5E9;
+}
+
+.valor > section:last-child > #submitPagamento {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
 }
 
 .valor h3 {    
@@ -161,17 +265,9 @@ input {
     text-align: start;  
 }
 
-.submitPagamento {
-    display: flex;
-    width: 160px;
-    height: 30px;
-    border-radius: 20px;
-    border: none;
-    background-color: #383D3B;
-    color: #52DEE5;
-    font-weight: bold;
-    cursor: pointer;
-}
+
+
+
 
 
 
