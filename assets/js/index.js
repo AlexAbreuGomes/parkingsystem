@@ -151,9 +151,10 @@ function validaPlacaBrasil(placa) {
 }
 
 // Funções de manipulação de carros
-function adicionarCarro() {
+function adicionarCarro(event) {
+    event.preventDefault();
     const placa = document.getElementById("placa").value;
-    const carro = document.getElementById("carro").value;
+    const veiculo = document.getElementById("veiculo").value;
     const agora = new Date();
     const entrada = agora.getTime(); // Armazena o timestamp de entrada
 
@@ -166,19 +167,20 @@ function adicionarCarro() {
         numVagas--;
         atualizarVagas(numVagas);
 
-        const tabela = document.getElementById("tabela").querySelector("tbody");
+        const tabela = document.getElementById("tabelaEstacionados").querySelector("tbody");
         const row = tabela.insertRow();
-        adicionarCelulas(row, placa, carro, agora.toLocaleTimeString());
+        adicionarCelulas(row, placa, veiculo, agora.toLocaleTimeString());
 
-        const carData = { placa, carro, entrada };
+        const carData = { placa, veiculo, entrada };
         localStorage.setItem(placa, JSON.stringify(carData));
     } else {
         alert("Não há mais vagas disponíveis.");
     }
 }
 
-function removerCarro() {
-    const placa = document.getElementById("placa").value;
+function removerCarro(event) {
+    event.preventDefault();
+    const placa = document.getElementById("saidaPlaca").value;
 
     if (localStorage.getItem(placa)) {
         const agora = new Date();
@@ -188,12 +190,13 @@ function removerCarro() {
 
         localStorage.removeItem(placa);
 
-        const tabela = document.getElementById("tabela").querySelector("tbody");
+        const tabela = document.getElementById("tabelaEstacionados").querySelector("tbody");
         for (let row of tabela.rows) {
             if (row.cells[0].textContent === placa) {
                 atualizarSaidaValor(row, agora.toLocaleTimeString(), `R$ ${valorPago}`);
                 numVagas++;
                 atualizarVagas(numVagas);
+                document.getElementById("valorPagar").textContent = `R$ ${valorPago}`;
                 break;
             }
         }
@@ -207,12 +210,12 @@ function atualizarVagas(vagas) {
     document.getElementById("vaga").textContent = vagas.toString();
 }
 
-function adicionarCelulas(row, placa, carro, horaAtual) {
+function adicionarCelulas(row, placa, veiculo, horaAtual) {
     row.insertCell(0).textContent = placa;
-    row.insertCell(1).textContent = carro;
+    row.insertCell(1).textContent = veiculo;
     row.insertCell(2).textContent = horaAtual;
-    row.insertCell(3).textContent = "";
-    row.insertCell(4).textContent = "";
+    row.insertCell(3).textContent = ""; // Placeholder for saída
+    row.insertCell(4).textContent = ""; // Placeholder for valor pago
 }
 
 function atualizarSaidaValor(row, horaAtual, valorPago) {
@@ -220,10 +223,29 @@ function atualizarSaidaValor(row, horaAtual, valorPago) {
     row.cells[4].textContent = valorPago; // Valor Pago
 }
 
+function carregarCarros() {
+    const tabela = document.getElementById("tabelaEstacionados").querySelector("tbody");
+    tabela.innerHTML = ""; // Limpa a tabela
+
+    Object.keys(localStorage).forEach(placa => {
+        const carData = JSON.parse(localStorage.getItem(placa));
+        if (carData && carData.entrada) {
+            const agora = new Date(carData.entrada);
+            const row = tabela.insertRow();
+            adicionarCelulas(row, carData.placa, carData.veiculo, agora.toLocaleTimeString());
+        }
+    });
+
+    atualizarVagas(numVagas - Object.keys(localStorage).length);
+}
+
 // Event listeners
-document.getElementById("adicionar-carro").addEventListener("click", adicionarCarro);
-document.getElementById("remover-carro").addEventListener("click", removerCarro);
+document.getElementById("entradaForm").addEventListener("submit", adicionarCarro);
+document.getElementById("saidaForm").addEventListener("submit", removerCarro);
 
 // Intervalos de atualização
 setInterval(capturarData, 1000);
 setInterval(capturarHora, 1000);
+
+// Carregar carros ao iniciar a página
+window.onload = carregarCarros;

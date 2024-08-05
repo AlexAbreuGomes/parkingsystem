@@ -1,28 +1,28 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, nativeTheme } = require('electron');
 const path = require('path');
 
+
 function createWindow() {
+
+  nativeTheme.themeSource = 'dark';
   const mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
-    fullscreen: true, // Abre a janela em tela cheia
+    //fullscreen: true, // Abre a janela em tela cheia
+    resizable: false,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js') // Opcional, remova se não precisar
     }
   });
 
+  mainWindow.maximize();
+
   mainWindow.loadFile('registro.html'); // Carrega o arquivo HTML
 
-  // Garante que a janela permaneça em tela cheia
-  mainWindow.on('resize', () => {
-    if (!mainWindow.isFullScreen()) {
-      mainWindow.setFullScreen(true);
-    }
-  });
 
-  mainWindow.on('restore', () => {
-    mainWindow.setFullScreen(true);
-  });
+  // mainWindow.on('restore', () => {
+  //   mainWindow.setFullScreen(true);
+  // });
 }
 
 app.whenReady().then(() => {

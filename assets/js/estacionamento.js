@@ -6,11 +6,16 @@ document.addEventListener("DOMContentLoaded", () => {
     .getElementsByTagName("tbody")[0];
   const valorPagarElement = document.getElementById("valorPagar");
 
+  // Definir tarifas para o estacionamento
+  const tarifaMinima = 3; // Valor para até 15 minutos
+  const tarifaHora = 6;   // Valor por hora
+  const tarifaDia = 100;  // Valor para 24 horas
+
   entradaForm.addEventListener("submit", (event) => {
     event.preventDefault();
     const placa = document.getElementById("placa").value;
     const veiculo = document.getElementById("veiculo").value;
-    const entrada = new Date().toLocaleString();
+    const entrada = new Date().toISOString();
 
     const novoVeiculo = { placa, veiculo, entrada };
     adicionarNaTabela(novoVeiculo);
@@ -27,11 +32,39 @@ document.addEventListener("DOMContentLoaded", () => {
     saidaForm.reset();
   });
 
+  // Definição da função calcularValorEstacionamento
+  function calcularValorEstacionamento(entrada, saida, tarifaMinima, tarifaHora, tarifaDia) {
+    if (!(entrada instanceof Date) || !(saida instanceof Date)) {
+      throw new Error("Datas inválidas");
+    }
+
+    const diffMs = saida - entrada;
+    const diffMinutos = diffMs / (1000 * 60);
+
+    if (diffMinutos <= 15) {
+      return tarifaMinima;
+    }
+
+    const diffHoras = Math.ceil(diffMinutos / 60);
+    const diasCompletos = Math.floor(diffHoras / 24);
+    const horasRestantes = diffHoras % 24;
+
+    let valor = diasCompletos * tarifaDia;
+
+    if (diasCompletos > 0 && horasRestantes <= 15) {
+      valor += tarifaMinima;
+    } else if (horasRestantes > 0) {
+      valor += horasRestantes * tarifaHora;
+    }
+
+    return valor;
+  }
+
   function adicionarNaTabela(veiculo) {
     const row = tabelaEstacionados.insertRow();
     row.insertCell(0).innerText = veiculo.placa;
     row.insertCell(1).innerText = veiculo.veiculo;
-    row.insertCell(2).innerText = veiculo.entrada;
+    row.insertCell(2).innerText = new Date(veiculo.entrada).toLocaleString();
   }
 
   function salvarNoLocalStorage(veiculo) {
@@ -52,7 +85,13 @@ document.addEventListener("DOMContentLoaded", () => {
       localStorage.setItem("veiculosEstacionados", JSON.stringify(veiculos));
 
       const saida = new Date();
-      const valorPago = calcularValorPago(new Date(veiculo.entrada), saida);
+      const valorPago = calcularValorEstacionamento(
+        new Date(veiculo.entrada),
+        saida,
+        tarifaMinima,
+        tarifaHora,
+        tarifaDia
+      );
       valorPagarElement.innerText = `R$ ${valorPago.toFixed(2)}`;
       const veiculoSaida = {
         ...veiculo,
@@ -64,15 +103,6 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       alert("Veículo não encontrado");
     }
-  }
-
-  function calcularValorPago(entrada, saida) {
-    if (!(entrada instanceof Date) || !(saida instanceof Date)) {
-      throw new Error("Datas inválidas");
-    }
-    const diffMs = saida - entrada;
-    const diffHoras = Math.ceil(diffMs / (1000 * 60 * 60));
-    return diffHoras * 6; // Valor por hora
   }
 
   function removerDaTabela(placa) {
@@ -92,16 +122,6 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem("relatorioEstacionamento", JSON.stringify(relatorio));
   }
 
-  function removerDaTabela(placa) {
-    const rows = tabelaEstacionados.getElementsByTagName("tr");
-    for (let i = 0; i < rows.length; i++) {
-      if (rows[i].cells[0].innerText === placa) {
-        tabelaEstacionados.deleteRow(i);
-        break;
-      }
-    }
-  }
-
   function carregarDados() {
     const veiculos =
       JSON.parse(localStorage.getItem("veiculosEstacionados")) || [];
@@ -109,6 +129,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   carregarDados();
+
 });
 
 function capturarData() {
@@ -132,17 +153,11 @@ function capturarData() {
 
 // Função para capturar a hora atual
 function capturarHora() {
-  // Obtenha a data atual
   const data = new Date();
-  // Obtenha a hora atual
   const hora = data.getHours().toString().padStart(2, "0");
-  // Obtenha os minutos atual
   const minutos = data.getMinutes().toString().padStart(2, "0");
-  // Obtenha os segundos atual e adicione o zero à esquerda se necessário
   const segundos = data.getSeconds().toString().padStart(2, "0");
-  // Crie a string com a hora atual no formato HH:MM:SS
   const horaAtual = `${hora}:${minutos}:${segundos}`;
-  // Insira a hora atual na etiqueta com o ID "hora"
   document.getElementById("hora").textContent = horaAtual;
 }
 
