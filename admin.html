@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- Admin Panel Section -->
+<section id="adminPanel">
+    <h2>Administração</h2>
+    <form id="tarifaForm">
+      <label for="tarifaMinima">Tarifa Mínima:</label>
+      <input type="number" id="tarifaMinima" required>
+      <label for="tarifaHora">Tarifa por Hora:</label>
+      <input type="number" id="tarifaHora" required>
+      <label for="tarifaDia">Tarifa por Dia:</label>
+      <input type="number" id="tarifaDia" required>
+      <button type="submit">Atualizar Tarifas</button>
+    </form>
+    <h3>Tarifas Atuais</h3>
+    <table id="tabelaTarifas">
+      <thead>
+        <tr>
+          <th>Tarifa Mínima</th>
+          <th>Tarifa por Hora</th>
+          <th>Tarifa por Dia</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td id="tarifaMinimaAtual"></td>
+          <td id="tarifaHoraAtual"></td>
+          <td id="tarifaDiaAtual"></td>
+        </tr>
+      </tbody>
+    </table>
+    <button id="resetData">Resetar Dados</button>
+  </section>
+  <script src="assets/js/admin.js"></script>
+</body>
+</html>

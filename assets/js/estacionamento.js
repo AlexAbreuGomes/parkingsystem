@@ -6,16 +6,21 @@ document.addEventListener("DOMContentLoaded", () => {
     .getElementsByTagName("tbody")[0];
   const valorPagarElement = document.getElementById("valorPagar");
 
-  // Definir tarifas para o estacionamento
-  const tarifaMinima = 3; // Valor para até 15 minutos
-  const tarifaHora = 6;   // Valor por hora
-  const tarifaDia = 100;  // Valor para 24 horas
+  // Carregar tarifas do localStorage ou usar valores padrão
+  let tarifaMinima = parseFloat(localStorage.getItem("tarifaMinima")) || 3;
+  let tarifaHora = parseFloat(localStorage.getItem("tarifaHora")) || 6;
+  let tarifaDia = parseFloat(localStorage.getItem("tarifaDia")) || 100;
 
   entradaForm.addEventListener("submit", (event) => {
     event.preventDefault();
     const placa = document.getElementById("placa").value;
     const veiculo = document.getElementById("veiculo").value;
     const entrada = new Date().toISOString();
+
+    if (!validaPlacaBrasil(placa)) {
+      alert("Placa inválida. Por favor, insira uma placa no formato correto.");
+      return;
+    }
 
     const novoVeiculo = { placa, veiculo, entrada };
     adicionarNaTabela(novoVeiculo);
@@ -32,7 +37,6 @@ document.addEventListener("DOMContentLoaded", () => {
     saidaForm.reset();
   });
 
-  // Definição da função calcularValorEstacionamento
   function calcularValorEstacionamento(entrada, saida, tarifaMinima, tarifaHora, tarifaDia) {
     if (!(entrada instanceof Date) || !(saida instanceof Date)) {
       throw new Error("Datas inválidas");
@@ -130,7 +134,43 @@ document.addEventListener("DOMContentLoaded", () => {
 
   carregarDados();
 
+  // Painel de Administração
+  const tarifaForm = document.getElementById("tarifaForm");
+  const resetDataButton = document.getElementById("resetData");
+
+  tarifaForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    tarifaMinima = parseFloat(document.getElementById("tarifaMinima").value);
+    tarifaHora = parseFloat(document.getElementById("tarifaHora").value);
+    tarifaDia = parseFloat(document.getElementById("tarifaDia").value);
+
+    // Salvar tarifas no localStorage
+    localStorage.setItem("tarifaMinima", tarifaMinima);
+    localStorage.setItem("tarifaHora", tarifaHora);
+    localStorage.setItem("tarifaDia", tarifaDia);
+
+    // Atualizar exibição das tarifas
+    document.getElementById("tarifaMinimaAtual").innerText = tarifaMinima;
+    document.getElementById("tarifaHoraAtual").innerText = tarifaHora;
+    document.getElementById("tarifaDiaAtual").innerText = tarifaDia;
+
+    tarifaForm.reset();
+  });
+
+  resetDataButton.addEventListener("click", () => {
+    localStorage.removeItem("veiculosEstacionados");
+    localStorage.removeItem("relatorioEstacionamento");
+    tabelaEstacionados.innerHTML = "";
+    valorPagarElement.innerText = "";
+    alert("Dados resetados com sucesso.");
+  });
 });
+
+function validaPlacaBrasil(placa) {
+  const padrao = /^[A-Z]{3}\d{4}$/;
+  const padraoExtendido = /^[A-Z]{3}-\d{4}$/;
+  return padrao.test(placa) || padraoExtendido.test(placa);
+}
 
 function capturarData() {
   const diasDaSemana = [
@@ -151,7 +191,6 @@ function capturarData() {
   document.getElementById("data").textContent = dataAtual;
 }
 
-// Função para capturar a hora atual
 function capturarHora() {
   const data = new Date();
   const hora = data.getHours().toString().padStart(2, "0");

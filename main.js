@@ -1,28 +1,52 @@
-const { app, BrowserWindow, nativeTheme } = require('electron');
+const { app, BrowserWindow, Menu, nativeTheme } = require('electron');
 const path = require('path');
 
-
 function createWindow() {
-
   nativeTheme.themeSource = 'dark';
   const mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
-    //fullscreen: true, // Abre a janela em tela cheia
     resizable: false,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js') // Opcional, remova se não precisar
+      preload: path.join(__dirname, 'preload.js')
     }
   });
 
   mainWindow.maximize();
+  mainWindow.loadFile('index.html');
 
-  mainWindow.loadFile('registro.html'); // Carrega o arquivo HTML
+  // Criação do menu
+  const template = [
+    {
+      label: 'MENU',
+      submenu: [
+        {
+          label: 'Recarregar',
+          accelerator: 'CmdOrCtrl+R',
+          click: () => {
+            mainWindow.reload();
+          }
+        },
+        {
+          label: 'Fechar',
+          accelerator: 'CmdOrCtrl+W',
+          click: () => {
+            app.quit();
+          }
+        },
+        {
+          label: 'Imprimir',
+          accelerator: 'CmdOrCtrl+P',
+          click: () => {
+            mainWindow.webContents.print();
+          }
+        }
+      ]
+    }
+  ];
 
-
-  // mainWindow.on('restore', () => {
-  //   mainWindow.setFullScreen(true);
-  // });
+  const menu = Menu.buildFromTemplate(template);
+  Menu.setApplicationMenu(menu);
 }
 
 app.whenReady().then(() => {
