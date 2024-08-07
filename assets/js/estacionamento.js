@@ -204,11 +204,18 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function validaPlacaBrasil(placa) {
-  const padrao = /^[A-Z]{3}\d{4}$/;
-  const padraoExtendidoMin = /^[a-z]{3}-\d{4}$/;
-  const padraoMin = /^[a-z]{3}\d{4}$/;
-  const padraoExtendido = /^[A-Z]{3}-\d{4}$/;
-  return padrao.test(placa) || padraoExtendido.test(placa) || padraoExtendidoMin.test(placa) || padraoMin.test(placa);
+  const padroes = [
+    /^[A-Z]{3}\d{4}$/,
+    /^[a-z]{3}-\d{4}$/,
+    /^[a-z]{3}\d{4}$/,
+    /^[A-Z]{3}-\d{4}$/,
+    /^[A-Z]{3}\d{1}[A-Z]{1}\d{2}$/,
+    /^[a-z]{3}\d{1}[a-z]{1}\d{2}$/,
+    /^[A-Z]{3}-\d{1}[A-Z]{1}\d{2}$/,
+    /^[a-z]{3}-\d{1}[a-z]{1}\d{2}$/
+  ];
+
+  return padroes.some(padrao => padrao.test(placa));
 }
 
 function capturarData() {
