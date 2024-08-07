@@ -101,7 +101,7 @@ input {
     text-align: center;
 }
 
-.submit, .relatorio, .submitPagamento, .administrador{
+.submit, .relatorio, .submitReload, .administrador{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -116,7 +116,7 @@ input {
     transition: background-color 0.1s, color 0.1s; /* Transição suave para o efeito hover */
 }
 
-.submit:hover, .relatorio:hover, .submitPagamento:hover {
+.submit:hover, .relatorio:hover, .submitReload:hover, .administrador:hover {
     background-color: #00f5d0; /* Cor de fundo ao passar o mouse */
     color: #000000; /* Cor do texto ao passar o mouse */
 }
@@ -259,7 +259,7 @@ tr:last-child td:last-child {
     
 }
 
-.valor > section:last-child > #submitPagamento {
+.valor > section:last-child > #submitReload {
     position: absolute;
     bottom: 10px;
     right: 10px;

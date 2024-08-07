@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const tarifaMinimaAtual = document.getElementById("tarifaMinimaAtual");
     const tarifaHoraAtual = document.getElementById("tarifaHoraAtual");
     const tarifaDiaAtual = document.getElementById("tarifaDiaAtual");
+    
   
     // Carregar tarifas do localStorage ou usar valores padrão
     let tarifaMinima = parseFloat(localStorage.getItem("tarifaMinima")) || 3;
@@ -31,6 +32,8 @@ document.addEventListener("DOMContentLoaded", () => {
       tarifaDiaAtual.innerText = tarifaDia;
   
       tarifaForm.reset();
+
+      location.reload();
     });
   
     const resetDataButton = document.getElementById("resetData");
@@ -49,4 +52,14 @@ document.addEventListener("DOMContentLoaded", () => {
   
       alert("Dados resetados com sucesso.");
     });
-  });
+
+    const vagasForm = document.getElementById("vagasForm");
+
+    vagasForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const totalVagas = parseInt(document.getElementById("totalVagas").value);
+        localStorage.setItem("totalVagas", totalVagas);
+        alert("Quantidade de vagas salva com sucesso!");
+        vagasForm.reset();
+    });
+});

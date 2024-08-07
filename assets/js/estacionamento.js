@@ -1,9 +1,18 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const vagasDisponiveisElement = document.getElementById("vagasDisponiveis");
+
+  // Verificar se as tarifas foram atualizadas
+  if (localStorage.getItem("tarifasAtualizadas") === "true") {
+      // Recarregar a página para refletir as novas tarifas
+      localStorage.removeItem("tarifasAtualizadas");
+      location.reload();
+  }
+
   const entradaForm = document.getElementById("entradaForm");
   const saidaForm = document.getElementById("saidaForm");
   const tabelaEstacionados = document
-    .getElementById("tabelaEstacionados")
-    .getElementsByTagName("tbody")[0];
+      .getElementById("tabelaEstacionados")
+      .getElementsByTagName("tbody")[0];
   const valorPagarElement = document.getElementById("valorPagar");
 
   // Carregar tarifas do localStorage ou usar valores padrão
@@ -12,124 +21,135 @@ document.addEventListener("DOMContentLoaded", () => {
   let tarifaDia = parseFloat(localStorage.getItem("tarifaDia")) || 100;
 
   entradaForm.addEventListener("submit", (event) => {
-    event.preventDefault();
-    const placa = document.getElementById("placa").value;
-    const veiculo = document.getElementById("veiculo").value;
-    const entrada = new Date().toISOString();
+      event.preventDefault();
+      const placa = document.getElementById("placa").value;
+      const veiculo = document.getElementById("veiculo").value;
+      const entrada = new Date().toISOString();
 
-    if (!validaPlacaBrasil(placa)) {
-      alert("Placa inválida. Por favor, insira uma placa no formato correto.");
-      return;
-    }
+      if (!validaPlacaBrasil(placa)) {
+          alert("Placa inválida. Por favor, insira uma placa no formato correto.");
+          return;
+      }
 
-    const novoVeiculo = { placa, veiculo, entrada };
-    adicionarNaTabela(novoVeiculo);
-    salvarNoLocalStorage(novoVeiculo);
+      const novoVeiculo = { placa, veiculo, entrada };
+      adicionarNaTabela(novoVeiculo);
+      salvarNoLocalStorage(novoVeiculo);
+      atualizarVagasDisponiveis();
 
-    entradaForm.reset();
+      entradaForm.reset();
   });
 
   saidaForm.addEventListener("submit", (event) => {
-    event.preventDefault();
-    const saidaPlaca = document.getElementById("saidaPlaca").value;
-    registrarSaida(saidaPlaca);
+      event.preventDefault();
+      const saidaPlaca = document.getElementById("saidaPlaca").value;
+      registrarSaida(saidaPlaca);
+      atualizarVagasDisponiveis();
 
-    saidaForm.reset();
+      saidaForm.reset();
   });
 
   function calcularValorEstacionamento(entrada, saida, tarifaMinima, tarifaHora, tarifaDia) {
-    if (!(entrada instanceof Date) || !(saida instanceof Date)) {
-      throw new Error("Datas inválidas");
-    }
+      if (!(entrada instanceof Date) || !(saida instanceof Date)) {
+          throw new Error("Datas inválidas");
+      }
 
-    const diffMs = saida - entrada;
-    const diffMinutos = diffMs / (1000 * 60);
+      const diffMs = saida - entrada;
+      const diffMinutos = diffMs / (1000 * 60);
 
-    if (diffMinutos <= 15) {
-      return tarifaMinima;
-    }
+      if (diffMinutos <= 15) {
+          return tarifaMinima;
+      }
 
-    const diffHoras = Math.ceil(diffMinutos / 60);
-    const diasCompletos = Math.floor(diffHoras / 24);
-    const horasRestantes = diffHoras % 24;
+      const diffHoras = Math.ceil(diffMinutos / 60);
+      const diasCompletos = Math.floor(diffHoras / 24);
+      const horasRestantes = diffHoras % 24;
 
-    let valor = diasCompletos * tarifaDia;
+      let valor = diasCompletos * tarifaDia;
 
-    if (diasCompletos > 0 && horasRestantes <= 15) {
-      valor += tarifaMinima;
-    } else if (horasRestantes > 0) {
-      valor += horasRestantes * tarifaHora;
-    }
+      if (diasCompletos > 0 && horasRestantes <= 15) {
+          valor += tarifaMinima;
+      } else if (horasRestantes > 0) {
+          valor += horasRestantes * tarifaHora;
+      }
 
-    return valor;
+      return valor;
   }
 
   function adicionarNaTabela(veiculo) {
-    const row = tabelaEstacionados.insertRow();
-    row.insertCell(0).innerText = veiculo.placa;
-    row.insertCell(1).innerText = veiculo.veiculo;
-    row.insertCell(2).innerText = new Date(veiculo.entrada).toLocaleString();
+      const row = tabelaEstacionados.insertRow();
+      row.insertCell(0).innerText = veiculo.placa;
+      row.insertCell(1).innerText = veiculo.veiculo;
+      row.insertCell(2).innerText = new Date(veiculo.entrada).toLocaleString();
   }
 
   function salvarNoLocalStorage(veiculo) {
-    let veiculos =
-      JSON.parse(localStorage.getItem("veiculosEstacionados")) || [];
-    veiculos.push(veiculo);
-    localStorage.setItem("veiculosEstacionados", JSON.stringify(veiculos));
+      let veiculos =
+          JSON.parse(localStorage.getItem("veiculosEstacionados")) || [];
+      veiculos.push(veiculo);
+      localStorage.setItem("veiculosEstacionados", JSON.stringify(veiculos));
   }
 
   function registrarSaida(placa) {
-    let veiculos =
-      JSON.parse(localStorage.getItem("veiculosEstacionados")) || [];
-    const veiculoIndex = veiculos.findIndex((item) => item.placa === placa);
+      let veiculos =
+          JSON.parse(localStorage.getItem("veiculosEstacionados")) || [];
+      const veiculoIndex = veiculos.findIndex((item) => item.placa === placa);
 
-    if (veiculoIndex !== -1) {
-      const veiculo = veiculos[veiculoIndex];
-      veiculos.splice(veiculoIndex, 1);
-      localStorage.setItem("veiculosEstacionados", JSON.stringify(veiculos));
+      if (veiculoIndex !== -1) {
+          const veiculo = veiculos[veiculoIndex];
+          veiculos.splice(veiculoIndex, 1);
+          localStorage.setItem("veiculosEstacionados", JSON.stringify(veiculos));
 
-      const saida = new Date();
-      const valorPago = calcularValorEstacionamento(
-        new Date(veiculo.entrada),
-        saida,
-        tarifaMinima,
-        tarifaHora,
-        tarifaDia
-      );
-      valorPagarElement.innerText = `R$ ${valorPago.toFixed(2)}`;
-      const veiculoSaida = {
-        ...veiculo,
-        saida: saida.toLocaleString(),
-        valorPago,
-      };
-      salvarNoRelatorio(veiculoSaida);
-      removerDaTabela(placa);
-    } else {
-      alert("Veículo não encontrado");
-    }
+          const saida = new Date();
+          const valorPago = calcularValorEstacionamento(
+              new Date(veiculo.entrada),
+              saida,
+              tarifaMinima,
+              tarifaHora,
+              tarifaDia
+          );
+          valorPagarElement.innerText = `R$ ${valorPago.toFixed(2)}`;
+          const veiculoSaida = {
+              ...veiculo,
+              saida: saida.toLocaleString(),
+              valorPago,
+          };
+          salvarNoRelatorio(veiculoSaida);
+          removerDaTabela(placa);
+      } else {
+          alert("Veículo não encontrado");
+      }
   }
 
   function removerDaTabela(placa) {
-    const rows = tabelaEstacionados.rows;
-    for (let i = 0; i < rows.length; i++) {
-      if (rows[i].cells[0].innerText === placa) {
-        tabelaEstacionados.deleteRow(i);
-        break;
+      const rows = tabelaEstacionados.rows;
+      for (let i = 0; i < rows.length; i++) {
+          if (rows[i].cells[0].innerText === placa) {
+              tabelaEstacionados.deleteRow(i);
+              break;
+          }
       }
-    }
   }
 
   function salvarNoRelatorio(veiculo) {
-    let relatorio =
-      JSON.parse(localStorage.getItem("relatorioEstacionamento")) || [];
-    relatorio.push(veiculo);
-    localStorage.setItem("relatorioEstacionamento", JSON.stringify(relatorio));
+      let relatorio =
+          JSON.parse(localStorage.getItem("relatorioEstacionamento")) || [];
+      relatorio.push(veiculo);
+      localStorage.setItem("relatorioEstacionamento", JSON.stringify(relatorio));
   }
 
   function carregarDados() {
-    const veiculos =
-      JSON.parse(localStorage.getItem("veiculosEstacionados")) || [];
-    veiculos.forEach(adicionarNaTabela);
+      const veiculos =
+          JSON.parse(localStorage.getItem("veiculosEstacionados")) || [];
+      veiculos.forEach(adicionarNaTabela);
+      atualizarVagasDisponiveis();
+  }
+
+  function atualizarVagasDisponiveis() {
+      const totalVagas = parseInt(localStorage.getItem("totalVagas")) || 0;
+      const veiculos =
+          JSON.parse(localStorage.getItem("veiculosEstacionados")) || [];
+      const vagasDisponiveis = totalVagas - veiculos.length;
+      vagasDisponiveisElement.innerText = vagasDisponiveis;
   }
 
   carregarDados();
@@ -139,48 +159,67 @@ document.addEventListener("DOMContentLoaded", () => {
   const resetDataButton = document.getElementById("resetData");
 
   tarifaForm.addEventListener("submit", (event) => {
-    event.preventDefault();
-    tarifaMinima = parseFloat(document.getElementById("tarifaMinima").value);
-    tarifaHora = parseFloat(document.getElementById("tarifaHora").value);
-    tarifaDia = parseFloat(document.getElementById("tarifaDia").value);
+      event.preventDefault();
+      tarifaMinima = parseFloat(document.getElementById("tarifaMinima").value);
+      tarifaHora = parseFloat(document.getElementById("tarifaHora").value);
+      tarifaDia = parseFloat(document.getElementById("tarifaDia").value);
 
-    // Salvar tarifas no localStorage
-    localStorage.setItem("tarifaMinima", tarifaMinima);
-    localStorage.setItem("tarifaHora", tarifaHora);
-    localStorage.setItem("tarifaDia", tarifaDia);
+      // Salvar tarifas no localStorage
+      localStorage.setItem("tarifaMinima", tarifaMinima);
+      localStorage.setItem("tarifaHora", tarifaHora);
+      localStorage.setItem("tarifaDia", tarifaDia);
 
-    // Atualizar exibição das tarifas
-    document.getElementById("tarifaMinimaAtual").innerText = tarifaMinima;
-    document.getElementById("tarifaHoraAtual").innerText = tarifaHora;
-    document.getElementById("tarifaDiaAtual").innerText = tarifaDia;
+      // Sinalizar que as tarifas foram atualizadas
+      localStorage.setItem("tarifasAtualizadas", "true");
 
-    tarifaForm.reset();
+      // Atualizar exibição das tarifas
+      document.getElementById("tarifaMinimaAtual").innerText = tarifaMinima;
+      document.getElementById("tarifaHoraAtual").innerText = tarifaHora;
+      document.getElementById("tarifaDiaAtual").innerText = tarifaDia;
+
+      tarifaForm.reset();
   });
 
   resetDataButton.addEventListener("click", () => {
-    localStorage.removeItem("veiculosEstacionados");
-    localStorage.removeItem("relatorioEstacionamento");
-    tabelaEstacionados.innerHTML = "";
-    valorPagarElement.innerText = "";
-    alert("Dados resetados com sucesso.");
+      localStorage.removeItem("veiculosEstacionados");
+      localStorage.removeItem("relatorioEstacionamento");
+      tabelaEstacionados.innerHTML = "";
+      valorPagarElement.innerText = "";
+      alert("Dados resetados com sucesso.");
+      atualizarVagasDisponiveis();
   });
+
+  // Adicionar event listener ao botão de recarregar
+  const submitReloadButton = document.getElementById("submitReload");
+  if (submitReloadButton) {
+      submitReloadButton.addEventListener("click", (event) => {
+          event.preventDefault();
+          reload();
+      });
+  }
+
+  function reload() {
+      location.reload();
+  }
 });
 
 function validaPlacaBrasil(placa) {
   const padrao = /^[A-Z]{3}\d{4}$/;
+  const padraoExtendidoMin = /^[a-z]{3}-\d{4}$/;
+  const padraoMin = /^[a-z]{3}\d{4}$/;
   const padraoExtendido = /^[A-Z]{3}-\d{4}$/;
-  return padrao.test(placa) || padraoExtendido.test(placa);
+  return padrao.test(placa) || padraoExtendido.test(placa) || padraoExtendidoMin.test(placa) || padraoMin.test(placa);
 }
 
 function capturarData() {
   const diasDaSemana = [
-    "Domingo",
-    "Segunda-feira",
-    "Terça-feira",
-    "Quarta-feira",
-    "Quinta-feira",
-    "Sexta-feira",
-    "Sábado",
+      "Domingo",
+      "Segunda-feira",
+      "Terça-feira",
+      "Quarta-feira",
+      "Quinta-feira",
+      "Sexta-feira",
+      "Sábado",
   ];
   const data = new Date();
   const diaSemana = diasDaSemana[data.getDay()];
