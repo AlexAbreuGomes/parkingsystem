@@ -10,21 +10,29 @@
 <body>
     <!-- Admin Panel Section -->
     <section id="adminPanel">
-        <h2>Administração</h2>
+        
+         
+        <menu class="menu">
+            <h2>Administração</h2>
+            <button onclick="window.location.href='admin.html'" class="button">Administrar Vagas</button>
+            <button onclick="window.location.href='admin-veiculos.html'"class="button">Administrar Veículos</button>
+            <button onclick="window.location.href='admin-usuarios.html'" class="button">Administrar Usuários</button>
+        </menu>
+        <section class="adminVagas">
         <form id="vagasForm">
-            <label for="totalVagas">Total de Vagas:</label>
+            <label for="totalVagas" class="textoAdmin">Total de Vagas:</label>
             <input type="number" id="totalVagas" required>
-            <button type="submit">Salvar</button>
+            <button type="submit" class="button">Salvar</button>
         </form>
-        <p id="vagasDisponiveisElement">Vagas Disponíveis: </p>
-        <form id="tarifaForm">
+        <p id="vagasDisponiveisElement" class="textoAdmin">Vagas Disponíveis: </p>
+        <form id="tarifaForm" class="textoAdmin">
             <label for="tarifaMinima">Tarifa Mínima:</label>
             <input type="number" id="tarifaMinima" required>
             <label for="tarifaHora">Tarifa por Hora:</label>
             <input type="number" id="tarifaHora" required>
             <label for="tarifaDia">Tarifa por Dia:</label>
             <input type="number" id="tarifaDia" required>
-            <button type="submit">Atualizar Tarifas</button>
+            <button type="submit" class="button"></button>Atualizar Tarifas</button>
         </form>
         <h3>Tarifas Atuais</h3>
         <table id="tabelaTarifas">
@@ -43,7 +51,8 @@
                 </tr>
             </tbody>
         </table>
-        <button id="resetData">Resetar Dados</button>
+        <button id="resetData" class="button"></button>Resetar Dados</button>
+    </section>
     </section>
     <script src="assets/js/admin.js"></script>
 </body>

@@ -1,100 +1,111 @@
-/* Reset CSS */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    color: #333;
-    line-height: 1.6;
-    padding: 20px;
+    font-family: 'Poppins', sans-serif;
+    color: #EEE5E9;
+    background-image: url("../img/estacionamento.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    margin: 0;
+    height: 100vh;
+}
+
+body::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(1, 3, 3, 0.9); /* Change the opacity value to adjust the black layer */
+    mix-blend-mode: normal;
+    z-index: -1;
+    pointer-events: none;
 }
 
 #adminPanel {
-    background: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 600px;
-    margin: 20px auto;
-}
-
-#adminPanel h2 {
-    margin-bottom: 20px;
-    font-size: 24px;
-    color: #333;
-}
-
-form {
-    margin-bottom: 20px;
-}
-
-form label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-
-form input[type="number"] {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: 100%;
-    padding: 8px;
+    height: 100vh;
+    
+    border: 1px solid #383D3B;
+}
+
+.menu{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 250px;
+    height: 100%;
+
+    border-right: 1px solid #383D3B;
+}
+
+.adminVagas {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    background-color: #c0c0c0;
+}
+
+#vagasForm{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
 }
 
-form button {
-    display: inline-block;
-    padding: 10px 15px;
-    background: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background 0.3s ease;
+#vagasForm input {
+    width: 160px;
+    height: 30px;
+    border-radius: 10px;
+    text-align: center;
+    border: 1px solid #383D3B;
 }
 
-form button:hover {
-    background: #0056b3;
-}
-
-#tabelaTarifas {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-}
-
-#tabelaTarifas th, #tabelaTarifas td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-}
-
-#tabelaTarifas th {
-    background: #f4f4f4;
+.textoAdmin {
+    color: black;
+    border-radius: 10px;
     font-weight: bold;
+    font-family: 'Poppins', sans-serif;
 }
 
-#resetData {
-    display: inline-block;
-    padding: 10px 15px;
-    background: #dc3545;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-}
-
-#resetData:hover {
-    background: #c82333;
-}
-
-#vagasDisponiveisElement {
-    margin-bottom: 20px;
-    font-size: 18px;
+.button {
+    width: 160px;
+    height: 30px;
+    border-radius: 10px;
+    background-color: #00f5d0;
+    color: #EEE5E9;
     font-weight: bold;
+    margin-top: 10px;
+    border: none;
 }
+
+ button:hover {
+    background-color: #0000; /* Cor de fundo ao passar o mouse */
+    color: #00f5d0; /* Cor do texto ao passar o mouse */
+}
+
+#tarifaForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+
+

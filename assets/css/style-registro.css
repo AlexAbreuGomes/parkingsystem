@@ -18,7 +18,7 @@ body::after {
     left: 0; /* Define a posição esquerda do pseudo-elemento */
     width: 100%; /* Define a largura do pseudo-elemento como 100% do body */
     height: 100%; /* Define a altura do pseudo-elemento como 100% do body */
-    background-color: rgba(1, 3, 3, 0.9); /* Define a cor de fundo com opacidade */
+    background-color: rgba(0, 0, 0, 0.9); /* Define a cor de fundo com opacidade */
     mix-blend-mode: normal; /* Define o modo de mesclagem como normal */
     z-index: -1; /* Define a posição do pseudo-elemento abaixo do conteúdo */
     pointer-events: none; /* Define que o pseudo-elemento não interfere na interação com o conteúdo */
