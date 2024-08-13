@@ -89,36 +89,60 @@ document.addEventListener("DOMContentLoaded", () => {
       localStorage.setItem("veiculosEstacionados", JSON.stringify(veiculos));
   }
 
-  function registrarSaida(placa) {
-      let veiculos =
-          JSON.parse(localStorage.getItem("veiculosEstacionados")) || [];
-      const veiculoIndex = veiculos.findIndex((item) => item.placa === placa);
+  async function enviarDadosParaBanco(veiculoSaida) {
+    try {
+        const response = await fetch('http://localhost:3000/registrarSaida', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(veiculoSaida),
+        });
 
-      if (veiculoIndex !== -1) {
-          const veiculo = veiculos[veiculoIndex];
-          veiculos.splice(veiculoIndex, 1);
-          localStorage.setItem("veiculosEstacionados", JSON.stringify(veiculos));
+        if (!response.ok) {
+            throw new Error('Erro ao enviar dados para o banco de dados');
+        }
 
-          const saida = new Date();
-          const valorPago = calcularValorEstacionamento(
-              new Date(veiculo.entrada),
-              saida,
-              tarifaMinima,
-              tarifaHora,
-              tarifaDia
-          );
-          valorPagarElement.innerText = `R$ ${valorPago.toFixed(2)}`;
-          const veiculoSaida = {
-              ...veiculo,
-              saida: saida.toLocaleString(),
-              valorPago,
-          };
-          salvarNoRelatorio(veiculoSaida);
-          removerDaTabela(placa);
-      } else {
-          alert("Veículo não encontrado");
-      }
-  }
+        console.log('Dados enviados para o banco de dados com sucesso');
+    } catch (error) {
+        console.error('Erro:', error);
+    }
+}
+
+async function registrarSaida(placa) {
+    let veiculos = JSON.parse(localStorage.getItem("veiculosEstacionados")) || [];
+    const veiculoIndex = veiculos.findIndex((item) => item.placa === placa);
+
+    if (veiculoIndex !== -1) {
+        const veiculo = veiculos[veiculoIndex];
+        veiculos.splice(veiculoIndex, 1);
+        localStorage.setItem("veiculosEstacionados", JSON.stringify(veiculos));
+
+        const saida = new Date();
+        const valorPago = calcularValorEstacionamento(
+            new Date(veiculo.entrada),
+            saida,
+            tarifaMinima,
+            tarifaHora,
+            tarifaDia
+        );
+        valorPagarElement.innerText = `R$ ${valorPago.toFixed(2)}`;
+        const veiculoSaida = {
+            placa: veiculo.placa,
+            veiculo: veiculo.veiculo,
+            entrada: veiculo.entrada,
+            saida: saida.toISOString(),
+            valorPago,
+        };
+        salvarNoRelatorio(veiculoSaida);
+        removerDaTabela(placa);
+
+        // Envia os dados para o banco de dados
+        await enviarDadosParaBanco(veiculoSaida);
+    } else {
+        alert("Veículo não encontrado");
+    }
+}
 
   function removerDaTabela(placa) {
       const rows = tabelaEstacionados.rows;

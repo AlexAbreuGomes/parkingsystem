@@ -1,31 +1,47 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/src/css/reset.css">
+    <link rel="stylesheet" href="assets/src/css/style-relatorio.css">
     <title>Relatório de Estacionamento</title>
-    <style>
-        table { width: 100%; border-collapse: collapse; }
-        th, td { border: 1px solid black; padding: 8px; text-align: left; }
-        th { background-color: #f2f2f2; }
-    </style>
+    <!-- Importando a biblioteca jsPDF -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script> -->
 </head>
+
 <body>
     <h1>Relatório de Estacionamento</h1>
-    <table id="tabelaRelatorio">
-        <thead>
-            <tr>
-                <th>Placa</th>
-                <th>Veículo</th>
-                <th>Entrada</th>
-                <th>Saída</th>
-                <th>Valor Pago</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
-    <a href="registro.html" target="_self">Voltar</a>
-    <script src="assets/js/relatorio.js"></script>
+    <main class="principal">
+        <section id="botoes">
+            <button id="btnVoltar">Voltar</button>
+            <button id="btnAdmin">Administrador</button>
+            <button id="btnImprimir">Imprimir</button>
+            <button id="btnExportarCSV">Exportar para CSV</button>
+        </section>
+
+        <section id="deletarVeiculo">
+            <input type="text" id="inputPlaca" placeholder="Digite a placa do veículo">
+            <button id="btnDeletar">Deletar Veículo</button>
+        </section>
+
+        <table id="tabelaRelatorio">
+            <thead>
+                <tr>
+                    <th>Placa</th>
+                    <th>Veículo</th>
+                    <th>Entrada</th>
+                    <th>Saída</th>
+                    <th>Valor Pago</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </main>
+    <!-- Certifique-se de que o script seja carregado no final do body -->
+    <script src="assets/src/js/relatorio.js"></script>
 </body>
+
 </html>

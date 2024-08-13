@@ -119,7 +119,7 @@ input {
 .submit:hover, .relatorio:hover, .submitReload:hover, .administrador:hover {
     background-color: #00f5d0; /* Cor de fundo ao passar o mouse */
     color: #000000; /* Cor do texto ao passar o mouse */
-}
+    border: 1px solid #383D3B;}
 
 a {
     text-decoration: none;

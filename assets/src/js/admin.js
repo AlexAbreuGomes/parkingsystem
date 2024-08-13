@@ -3,17 +3,20 @@ document.addEventListener("DOMContentLoaded", () => {
     const tarifaMinimaAtual = document.getElementById("tarifaMinimaAtual");
     const tarifaHoraAtual = document.getElementById("tarifaHoraAtual");
     const tarifaDiaAtual = document.getElementById("tarifaDiaAtual");
+    const vagaImput = document.getElementById("totalVagas");
+    const vagas = document.getElementById("vagasForm");
     
   
     // Carregar tarifas do localStorage ou usar valores padrão
     let tarifaMinima = parseFloat(localStorage.getItem("tarifaMinima")) || 3;
     let tarifaHora = parseFloat(localStorage.getItem("tarifaHora")) || 6;
     let tarifaDia = parseFloat(localStorage.getItem("tarifaDia")) || 100;
+    
   
     // Atualizar exibição das tarifas
-    tarifaMinimaAtual.innerText = tarifaMinima;
-    tarifaHoraAtual.innerText = tarifaHora;
-    tarifaDiaAtual.innerText = tarifaDia;
+    tarifaMinimaAtual.innerText = `R$: ${tarifaMinima},00`;
+    tarifaHoraAtual.innerText =  `R$: ${tarifaHora},00`;
+    tarifaDiaAtual.innerText = `R$: ${tarifaDia},00`;
   
     tarifaForm.addEventListener("submit", (event) => {
       event.preventDefault();
@@ -27,13 +30,13 @@ document.addEventListener("DOMContentLoaded", () => {
       localStorage.setItem("tarifaDia", tarifaDia);
   
       // Atualizar exibição das tarifas
-      tarifaMinimaAtual.innerText = tarifaMinima;
-      tarifaHoraAtual.innerText = tarifaHora;
-      tarifaDiaAtual.innerText = tarifaDia;
+      tarifaMinimaAtual.innerText = `R$: ${tarifaMinima},00`;
+      tarifaHoraAtual.innerText = `R$: ${tarifaHora},00`;
+      tarifaDiaAtual.innerText = `R$: ${tarifaDia},00`;
   
       tarifaForm.reset();
 
-      location.reload();
+      
     });
   
     const resetDataButton = document.getElementById("resetData");
@@ -46,9 +49,9 @@ document.addEventListener("DOMContentLoaded", () => {
       tarifaHora = 6;
       tarifaDia = 100;
   
-      tarifaMinimaAtual.innerText = tarifaMinima;
-      tarifaHoraAtual.innerText = tarifaHora;
-      tarifaDiaAtual.innerText = tarifaDia;
+      tarifaMinimaAtual.innerText = `R$: ${tarifaMinima},00`;
+      tarifaHoraAtual.innerText = `R$: ${tarifaHora},00`;
+      tarifaDiaAtual.innerText = `R$: ${tarifaDia},00`;
   
       alert("Dados resetados com sucesso.");
     });
