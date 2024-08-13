@@ -3,7 +3,7 @@
 body {
     font-family: 'Poppins', sans-serif;
     color: #EEE5E9;
-    background-image: url("../img/estacionamento.png");
+    background-image: url("estacionamento.png");
     background-repeat: no-repeat;
     background-size: cover;
     position: relative;

@@ -1,5 +1,17 @@
 const { app, BrowserWindow, Menu, nativeTheme } = require('electron');
 const path = require('path');
+const { spawn } = require('child_process');
+
+function startServer(){
+  const server = spawn('node', ['server.js']);
+  server.stdout.on('data', (data) => {
+    console.log(`Servidor Node.js: ${data}`);
+  });
+  server.stderr.on('data', (data) => {
+    console.error(`Erro no servidor Node.js: ${data}`);
+  });
+  return server;
+}
 
 function createWindow() {
   // Define o tema para 'dark'
@@ -22,7 +34,7 @@ function createWindow() {
   mainWindow.maximize();
 
   // Carrega o arquivo HTML principal
-  mainWindow.loadFile('index.html');
+  mainWindow.loadURL('http://localhost:3000/');
 
   // Adiciona um ouvinte para quando o conteúdo da página estiver completamente carregado
   mainWindow.webContents.on('did-finish-load', () => {
@@ -68,6 +80,7 @@ function createWindow() {
 
 // Inicializa a aplicação
 app.whenReady().then(() => {
+  const server = startServer();
   createWindow();
 
   app.on('activate', () => {
@@ -76,10 +89,16 @@ app.whenReady().then(() => {
       createWindow();
     }
   });
+
+  app.on('before-quit', () => {
+    server.kill();
+  });
+
 });
 
 // Fecha a aplicação quando todas as janelas forem fechadas (exceto no macOS)
 app.on('window-all-closed', () => {
+  
   if (process.platform !== 'darwin') {
     app.quit();
   }

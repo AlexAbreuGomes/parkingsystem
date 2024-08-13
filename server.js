@@ -2,6 +2,8 @@ const express = require('express');
 const cors = require('cors'); // Importar o middleware cors
 const { Pool } = require('pg');
 const app = express();
+const path = require('path');
+
 
 app.use(cors()); // Adicionar o middleware cors
 app.use(express.json()); // Para parsear JSON no body da requisição
@@ -11,8 +13,22 @@ const pool = new Pool({
     user: 'postgres',
     host: 'localhost',
     database: 'autoPark',
-    password: '132510Ale*', // BemVindo!
+    password: 'BemVindo!', // BemVindo!
     port: 5432,
+});
+
+// Middleware para tratar erros de conexão com o PostgreSQL
+pool.on('error', (err, client) => {
+    console.error('Erro na conexão com o PostgreSQL:', err);
+    process.exit(-1);
+});
+
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 // Rota para registrar a saída do veículo
