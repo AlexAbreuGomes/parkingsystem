@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const entrada = new Date().toISOString();
 
       if (!validaPlacaBrasil(placa)) {
-          alert("Placa inválida. Por favor, insira uma placa no formato correto.");
+         alert("Placa inválida. Por favor, insira uma placa no formato correto.");
           return;
       }
 
