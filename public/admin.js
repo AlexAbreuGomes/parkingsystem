@@ -1,9 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // Referências aos elementos de exibição e formulários
+
   const tarifaForm = document.getElementById("tarifaForm");
   const tarifaMinimaAtual = document.getElementById("tarifaMinimaAtual");
   const tarifaHoraAtual = document.getElementById("tarifaHoraAtual");
   const tarifaDiaAtual = document.getElementById("tarifaDiaAtual");
+
   const resetDataButton = document.getElementById("resetData");
   const vagasForm = document.getElementById("vagasForm");
 
@@ -79,4 +80,4 @@ document.addEventListener("DOMContentLoaded", () => {
       vagasForm.reset();
   });
 });
-//teste
+
