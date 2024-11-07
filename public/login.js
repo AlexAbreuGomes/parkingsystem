@@ -1,5 +1,5 @@
 // Nomeando a função de inicialização
-
+import { mostrarNotificacao } from "./notificacao.js";
     document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('submit').addEventListener('click', function(event) {
             event.preventDefault();
@@ -13,7 +13,7 @@
                 // Redireciona para a tela de uso após login bem-sucedido
                 window.location.href = 'registro.html';
             } else {
-                alert('Usuário ou senha incorretos');
+                mostrarNotificacao('Usuário ou senha incorretos');
             }
         });
     });

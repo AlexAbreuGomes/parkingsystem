@@ -5,61 +5,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="reset.css">
     <link rel="stylesheet" href="style-admin.css">
+    <link rel="stylesheet" href="style-notificacao.css">
     <title>Administração</title>
 </head>
 <body>
     <!-- Admin Panel Section -->
     <section id="adminPanel">
-        
-         
         <menu class="menu">
             <section class="menuBox">
-            <h2>Administração</h2>
-            <button onclick="window.location.href='admin.html'" class="button">Administrar Vagas</button>
-            <button onclick="window.location.href='relatorio.html'"class="button">Relatório</button>
-            <button onclick="window.location.href='Registro.html'" class="button"> Voltar </button>
-        </section>
+                <h2>Administração</h2>
+                <button onclick="window.location.href='admin.html'" class="button">Administrar Vagas</button>
+                <button onclick="window.location.href='relatorio.html'" class="button">Relatório</button>
+                <button onclick="window.location.href='Registro.html'" class="button">Voltar</button>
+            </section>
         </menu>
         <section class="adminVagas">
-        <form id="vagasForm">
-            <label for="totalVagas" class="textoAdmin">Total de Vagas:</label>
-            <input type="number" id="totalVagas" required>
-            <button type="submit" class="button">Salvar</button>
-        </form>
-        
-        <form id="tarifaForm" class="textoAdmin">
-            <label for="tarifaMinima">Tarifa Mínima:</label>
-            <input type="number" id="tarifaMinima" required>
-            <label for="tarifaHora">Tarifa por Hora:</label>
-            <input type="number" id="tarifaHora" required>
-            <label for="tarifaDia">Tarifa por Dia:</label>
-            <input type="number" id="tarifaDia" required>
-            <button type="submit" class="button">Atualizar Tarifas</button>
-        </form>
-        <h3>Tarifas Atuais</h3>
-        <table id="tabelaTarifas">
-            <thead>
-                <tr>
-                    <th>Tarifa Mínima</th>
-                    <th>Tarifa por Hora</th>
-                    <th>Tarifa por Dia</th>
-                    <th>vagas</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td id="tarifaMinimaAtual"></td>
-                    <td id="tarifaHoraAtual"></td>
-                    <td id="tarifaDiaAtual"></td>
-                </tr>
-            </tbody>
-        </table>
-        <button id="resetData" class="button" type="reset">Resetar Dados</button>
-        <div id="notification" style="display: none; background-color: #4CAF50; color: white; padding: 10px; margin-top: 10px;">
-            Dados resetados com sucesso.
-        </div>
+            <form id="vagasForm">
+                <label for="totalVagas" class="textoAdmin">Total de Vagas:</label>
+                <input type="number" id="totalVagas" required>
+                <button type="submit" class="button">Salvar</button>
+            </form>
+            
+            <form id="tarifaForm" class="textoAdmin">
+                <label for="tarifaMinima">Tarifa Mínima:</label>
+                <input type="number" id="tarifaMinima" required>
+                <label for="tarifaHora">Tarifa por Hora:</label>
+                <input type="number" id="tarifaHora" required>
+                <label for="tarifaDia">Tarifa por Dia:</label>
+                <input type="number" id="tarifaDia" required>
+                <button type="submit" class="button">Atualizar Tarifas</button>
+            </form>
+            <h3>Tarifas Atuais</h3>
+            <table id="tabelaTarifas">
+                <thead>
+                    <tr>
+                        <th>Tarifa Mínima</th>
+                        <th>Tarifa por Hora</th>
+                        <th>Tarifa por Dia</th>
+                        <th>Vagas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td id="tarifaMinimaAtual"></td>
+                        <td id="tarifaHoraAtual"></td>
+                        <td id="tarifaDiaAtual"></td>
+                        <td id="vagasAtual"></td>
+
+                    </tr>
+                </tbody>
+            </table>
+            <button id="resetData" class="button" type="reset">Resetar Dados</button>
+            
+                
+            </div>
+            <div id="notification"></div>
+        </section>
+       
     </section>
-    </section>
-    <script src="admin.js"></script>
+
+    <!-- Importando o módulo de notificação -->
+    <script type="module" src="notificacao.js"></script>
+    <!-- Importando o script principal que depende da notificação -->
+    <script type="module" src="admin.js"></script>
 </body>
 </html>
