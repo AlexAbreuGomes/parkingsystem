@@ -1,5 +1,4 @@
 // estacionamento.js
-import { atualizarDataHora } from "./dataHora.js";
 import { validaPlacaBrasil } from "./validacaoPlaca.js";
 import { carregarTarifasEVagas, atualizarExibicao ,salvarNoLocalStorage,} from "./configuracoes.js";
 
@@ -110,8 +109,6 @@ document.addEventListener("DOMContentLoaded", () => {
         return 0;
     }
 
-
-
     function adicionarNaTabela(veiculo) {
         const row = tabelaEstacionados.insertRow();
         row.insertCell(0).innerText = veiculo.placa;
@@ -130,68 +127,90 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    async function registrarSaida(placa) {
-        let veiculos = JSON.parse(localStorage.getItem("veiculosEstacionados")) || [];
-        const veiculoIndex = veiculos.findIndex((item) => item.placa === placa);
+   // Caminho do arquivo: /src/estacionamento.js
 
-        if (veiculoIndex !== -1) {
-            const veiculo = veiculos[veiculoIndex];
-            veiculos.splice(veiculoIndex, 1);
-            localStorage.setItem("veiculosEstacionados", JSON.stringify(veiculos));
+// Função principal que coordena o processo de saída do veículo
+// Caminho do arquivo: /src/estacionamento.js
 
-            const saida = new Date();
-            const valorPago = calcularValorEstacionamento(
-                new Date(veiculo.entrada),
-                saida,
-                tarifaMinima,
-                tarifaHora,
-                tarifaDia
-            );
-
-            // Formatação do valor pago com separação de milhar e vírgula como separador decimal
-            const valorFormatado = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(valorPago);
-
-            // Calcular o tempo de permanência
-            const diffMs = saida - new Date(veiculo.entrada); // diferença em milissegundos
-            const diffMinutos = diffMs / (1000 * 60);
-            const diffHoras = Math.floor(diffMinutos / 60);
-            const minutosRestantes = Math.floor(diffMinutos % 60);
-            const diffDias = Math.floor(diffHoras / 24);
-            const horasRestantes = diffHoras % 24;
-
-            let tempoPermanencia = `${diffDias} dia(s), ${horasRestantes} hora(s) e ${minutosRestantes} minuto(s)`;
-
-            // Exibir mensagem com valor formatado, tempo de permanência, placa e veículo
-            valorPagarElement.innerText = `Placa: ${veiculo.placa}\nVeículo: ${veiculo.veiculo}\nValor total a pagar: ${valorFormatado}\nTempo de permanência: ${tempoPermanencia}`;
-
-            // Remover a mensagem após 5 segundos (5000 milissegundos)
-            setTimeout(() => {
-                valorPagarElement.innerText = ''; // Apaga a mensagem
-            }, 5000);
-
-            // Formatar as datas antes de adicionar ao relatório
-            const entradaFormatada = formatarData(veiculo.entrada);
-            const saidaFormatada = formatarData(saida);
-
-            const veiculoSaida = {
-                placa: veiculo.placa,
-                veiculo: veiculo.veiculo,
-                entrada: entradaFormatada,
-                saida: saidaFormatada,
-                valorPago,
-            };
-
-            salvarNoRelatorio(veiculoSaida);
-            removerDaTabela(placa);
-
-            await enviarDadosParaBanco(veiculoSaida);
-        } else {
-            alert("Veículo não encontrado");
-        }
+function registrarSaida(placa) {
+    const veiculo = obterVeiculoPorPlaca(placa);
+    if (!veiculo) {
+        alert("Veículo não encontrado");
+        return;
     }
 
+    const saida = new Date();
+    const valorPago = calcularValorEstacionamento(
+        new Date(veiculo.entrada),
+        saida,
+        tarifaMinima,
+        tarifaHora,
+        tarifaDia
+    );
+    const tempoPermanencia = calcularTempoPermanencia(veiculo.entrada, saida);
+    const valorFormatado = formatarValor(valorPago);
 
+    exibirMensagem(veiculo, valorFormatado, tempoPermanencia);
 
+    const veiculoSaida = gerarVeiculoSaida(veiculo, saida, valorPago);
+    salvarNoRelatorio(veiculoSaida); // Salva no relatório localmente
+    removerVeiculoTabela(placa);     // Remove da tabela de veículos estacionados
+}
+
+// Função que obtém o veículo no localStorage e o remove
+function obterVeiculoPorPlaca(placa) {
+    let veiculos = JSON.parse(localStorage.getItem("veiculosEstacionados")) || [];
+    const veiculoIndex = veiculos.findIndex(item => item.placa === placa);
+
+    if (veiculoIndex === -1) return null;
+
+    const [veiculo] = veiculos.splice(veiculoIndex, 1);
+    atualizarLocalStorage(veiculos);
+    return veiculo;
+}
+
+// Atualiza o localStorage com a lista de veículos atualizada
+function atualizarLocalStorage(veiculos) {
+    localStorage.setItem("veiculosEstacionados", JSON.stringify(veiculos));
+}
+
+// Calcula o tempo de permanência
+function calcularTempoPermanencia(entrada, saida) {
+    const diffMs = new Date(saida) - new Date(entrada);
+    const diffMinutos = diffMs / (1000 * 60);
+    const diffHoras = Math.floor(diffMinutos / 60);
+    const minutosRestantes = Math.floor(diffMinutos % 60);
+    const diffDias = Math.floor(diffHoras / 24);
+    const horasRestantes = diffHoras % 24;
+    return `${diffDias} dia(s), ${horasRestantes} hora(s) e ${minutosRestantes} minuto(s)`;
+}
+
+// Formata o valor pago em BRL
+function formatarValor(valor) {
+    return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(valor);
+}
+
+// Exibe a mensagem com o valor formatado e tempo de permanência
+function exibirMensagem(veiculo, valorFormatado, tempoPermanencia) {
+    valorPagarElement.innerText = `Placa: ${veiculo.placa}\nVeículo: ${veiculo.veiculo}\nValor total a pagar: ${valorFormatado}\nTempo de permanência: ${tempoPermanencia}`;
+    setTimeout(() => valorPagarElement.innerText = '', 8000);
+}
+
+// Gera o objeto de saída do veículo para o relatório
+function gerarVeiculoSaida(veiculo, saida, valorPago) {
+    return {
+        placa: veiculo.placa,
+        veiculo: veiculo.veiculo,
+        entrada: formatarData(veiculo.entrada),
+        saida: formatarData(saida),
+        valorPago
+    };
+}
+
+// Remove o veículo da tabela de estacionados
+function removerVeiculoTabela(placa) {
+    removerDaTabela(placa);
+}
 
     function removerDaTabela(placa) {
         const rows = tabelaEstacionados.rows;
