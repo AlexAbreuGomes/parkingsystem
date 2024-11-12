@@ -1,5 +1,4 @@
 
-
  export function removerVeiculoTabela(placa) {
     removerDaTabela(placa);
 }
