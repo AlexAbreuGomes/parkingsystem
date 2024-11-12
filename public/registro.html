@@ -1,88 +1,99 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+    <!DOCTYPE html>
+    <html lang="pt-br">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="reset.css">
-    <link rel="stylesheet" href="style-registro.css">
-    <title>registro</title>
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="reset.css">
+        <link rel="stylesheet" href="style-registro.css">
+        <link rel="stylesheet" href="style-notificacao.css">
+        <title>registro</title>
+    </head>
 
-<body>
-    <main class="principal">
-        
-        <section id="lateral">
+    <body>
+        <main class="principal">
             
-            <h2>Entrada de Veículos:</h2>
-            <form id="entradaForm">
-                <label for="placa">Placa:</label>
-                <input type="text" id="placa" name="placa" required><br>
-                <label for="veiculo">Veículo:</label>
-                <input type="text" id="veiculo" name="veiculo" required><br>
-                <input type="hidden" id="entrada" name="entrada">
-                <button class="submit" type="submit">Adicionar</button>
-            </form>
+            <section id="lateral">
+                
+                <h2>Entrada de Veículos:</h2>
+                <form id="entradaForm">
+                    <label for="placa">Placa:</label>
+                    <input type="text" id="placa" name="placa" required><br>
+                    <label for="veiculo">Veículo:</label>
+                    <input type="text" id="veiculo" name="veiculo" required><br>
+                    <input type="hidden" id="entrada" name="entrada">
+                    <button class="submit" type="submit">Adicionar</button>
+                </form>
+                
 
-            <h2>Saída de Veículos:</h2>
-            <form id="saidaForm">
-                <label for="saidaPlaca">Placa:</label>
-                <input type="text" id="saidaPlaca" name="saidaPlaca" required><br>
-                <button class="submit" type="submit">Registrar Saída</button>
-            </form>
-            <section>
-                <a class="relatorio" href="relatorio.html" target="_self">Ver Relatório</a>
-            </section>
-            <section>
-                <a class="administrador" href="admin.html" target="_self">Administrador </a>
-            </section>
-        </section>
-
-        <section class="listaVeiculosValor">
-            <section class="vagas">
-                <section class="vagas-disponiveis">
-                    <h3>Vagas Disponíveis:</h3>
-                    <h3><span id="vagasDisponiveis"></span></h3>
-                    
-                </section>
-                <data id="data-hora">
-                    <h3 id="data"></h3>
-                    <h3 id="hora"></h3>
-                </data>
-            </section>
-
-            <section id="veiculos-registrados">
-                <h2 id="texto-adicional">Veículos Estacionados</h2>
-                <section class="tabela">
-                    <table id="tabelaEstacionados">
-                        <thead>
-                            <tr>
-                                <th>Placa</th>
-                                <th>Veículo</th>
-                                <th>Entrada</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                             <!-- Aqui vai o conteúdo da tabela  -->
-                        </tbody>
-                    </table>
-                </section>
-            </section>
-            <section class="valor">
+                <h2>Saída de Veículos:</h2>
+                <form id="saidaForm">
+                    <label for="saidaPlaca">Placa:</label>
+                    <input type="text" id="saidaPlaca" name="saidaPlaca" required><br>
+                    <button class="submit" type="submit">Registrar Saída</button>
+                </form>
+                
                 <section>
-                    <h3>Valor a pagar:</h3>
-                    <p id="valorPagar"></p>
+                    <a class="relatorio" href="relatorio.html" target="_self">Ver Relatório</a>
                 </section>
                 <section>
-                    <button id="submitReload" class="submitReload" type="submit">Recarregar</button>
+                    <a class="administrador" href="admin.html" target="_self">Administrador </a>
                 </section>
             </section>
-        </section>
-    </main>
-    <script type="module" src="config/dataHora.js"></script>
-    <script type="module" src="config/estacionamento.js"></script>
-    <script type="module" src="config/configuracoes.js"></script>
-    
-</body>
 
-</html>
+            <section class="listaVeiculosValor">
+                <section class="vagas">
+                    <section class="vagas-disponiveis">
+                        <h3>Vagas Disponíveis:</h3>
+                        <h3><span id="vagasDisponiveis"></span></h3>
+                        
+                    </section>
+                    <data id="data-hora">
+                        <h3 id="data"></h3>
+                        <h3 id="hora"></h3>
+                    </data>
+                </section>
+                
+
+                <section id="veiculos-registrados">
+                    <div id="notification"></div>
+                    <h2 id="texto-adicional">Veículos Estacionados</h2>
+                    <section class="tabela">
+                        <table id="tabelaEstacionados">
+                            <thead>
+                                <tr>
+                                    <th>Placa</th>
+                                    <th>Veículo</th>
+                                    <th>Entrada</th>
+                                </tr>
+                                
+                            </thead>
+                            
+                            <tbody>
+                                
+                                <!-- Aqui vai o conteúdo da tabela  -->
+                            </tbody>
+                            
+                        </table>
+                        
+                    </section>
+                </section>
+                <section class="valor">
+                    <section>
+                        <h3>Valor a pagar:</h3>
+                        <p id="valorPagar"></p>
+                    </section>
+                    <section>
+                        <button id="submitReload" class="submitReload" type="submit">Recarregar</button>
+                    </section>
+                </section>
+            </section>
+        </main>
+        <script type="module" src="config/dataHora.js"></script>
+        <script type="module" src="config/estacionamento.js"></script>
+        <script type="module" src="config/configuracoes.js"></script>
+        <script type="module" src="config/notificacao.js"></script>
+        
+    </body>
+
+    </html>

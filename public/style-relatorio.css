@@ -8,6 +8,29 @@ body {
   height: 100vh;
 }
 
+/* Estilo para o valor total */
+#valorTotal {
+  font-size: 24px;
+  color: #EEE5E9;
+  font-weight: bold;
+  padding: 10px;
+  background-color: #000;
+  border-radius: 10px;
+  border: 2px solid #383D3B;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+  max-width: 1220px;
+  text-align: center;
+}
+
+#valorTotal strong {
+  font-size: 1.5em;
+  color: #00f5d0;
+}
+
+
 .principal {
   display: flex;
   flex-direction: column;

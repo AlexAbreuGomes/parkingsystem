@@ -13,19 +13,30 @@
 
 <body>
     <h1>Relatório de Estacionamento</h1>
+    
+    <!-- Seção para mostrar o valor total apurado no dia -->
+   
+        
+    
+
     <main class="principal">
+        <!-- Botões de navegação e ações -->
         <section id="botoes">
             <button id="btnVoltar">Voltar</button>
             <button id="btnAdmin">Administrador</button>
             <button id="btnImprimir">Imprimir</button>
             <button id="btnExportarCSV">Exportar para CSV</button>
+            <button id="btnSalvar">Salvar e Resetar</button> <!-- Novo botão -->
         </section>
 
+        <!-- Seção para deletar um veículo -->
         <section id="deletarVeiculo">
             <input type="text" id="inputPlaca" placeholder="Digite a placa do veículo">
             <button id="btnDeletar">Deletar Veículo</button>
+            <h2 id="valorTotal">Total do Dia: R$ <span id="valorTotalDia">0,00</span></h2>
         </section>
 
+        <!-- Tabela do relatório -->
         <table id="tabelaRelatorio">
             <thead>
                 <tr>
@@ -37,11 +48,15 @@
                 </tr>
             </thead>
             <tbody>
+                <!-- Os dados dos veículos serão inseridos aqui via JavaScript -->
             </tbody>
         </table>
     </main>
+
     <!-- Certifique-se de que o script seja carregado no final do body -->
     <script type="module" src="config/relatorio.js"></script>
+    
+    
 </body>
 
 </html>

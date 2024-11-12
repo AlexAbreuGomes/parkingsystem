@@ -64,15 +64,21 @@ Por fim, a propriedade pointer-events é definida como none, para garantir que a
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    width: 200px;
-    height: 660px;
+    
+    /* Ajustes de largura e altura com unidades flexíveis */
+    width: min(200px, 20vw); /* Usa 20% da largura da tela, limitado a 200px */
+    height: min(660px, 80vh); /* Usa 80% da altura da tela, limitado a 660px */
+    
     background-color: #c0c0c0;
     border-radius: 10px;
     border: 1px solid #383D3B;
     box-shadow: 0 0 10px #c0c0c0;
+    
+    /* Ajustes de margem e espaçamento */
     margin-bottom: -90px;
-    gap: 10px;
+    gap: 1vh; /* Espaçamento entre elementos relativo à altura da tela */
 }
+
 
 #lateral h2 {
     width: 100%;
@@ -140,13 +146,17 @@ a {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 600px;
-    padding: 10px 10px 10px 10px;
+
+    /* Ajuste de largura com unidades flexíveis */
+    width: min(600px, 90vw); /* Usa 90% da largura da janela, limitado a 600px */
+
+    padding: 10px; /* Simplificado */
     background-color: #c0c0c0;
     border-radius: 10px;
     border: 1px solid #383D3B;
     box-shadow: 0 0 10px #00f5d0;
 }
+
 
 .vagas-disponiveis {
     display: flex;
@@ -167,7 +177,7 @@ a {
     flex-direction: column;
     align-items: center;
     justify-content: start;
-    width: 600px;
+    width: min(600px, 90vw); /* Usa 90% da largura da janela, limitado a 600px */
     height: 450px;
     border: 1px solid #383D3B;
     background-color: #c0c0c0;
@@ -241,7 +251,6 @@ td {
 /* Seleciona a última linha da tabela */
 tr:last-child td:first-child {
     border-bottom-left-radius: 10px; 
-    
 }
 
 tr:last-child td:last-child {
@@ -250,13 +259,12 @@ tr:last-child td:last-child {
 
 .valor {
     position: relative;
-    min-width: 600px; /* Adicionado para travar o tamanho em 600px */
+    width: min(600px, 90vw); /* Usa 90% da largura da janela, limitado a 600px */
     height: 200px; /* Ajuste o tamanho conforme necessário */
     border: 1px solid #000; /* Apenas para visualização */
     padding:5px; /* Apenas para visualização */
     border-radius: 10px;
-    background-color: #c0c0c0;
-    
+    background-color: #c0c0c0;  
 }
 
 .valor > section:last-child > #submitReload {

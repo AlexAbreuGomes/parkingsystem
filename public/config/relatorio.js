@@ -1,94 +1,133 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const tabelaRelatorio = document.getElementById('tabelaRelatorio').getElementsByTagName('tbody')[0];
+// relatorio.js
 
+import { formatarValor } from "./formatarValor.js";
+import { adicionarNaTabela } from "./adicionarVeiculo.js";
+import { mostrarNotificacao } from "./notificacao.js";
+
+document.addEventListener("DOMContentLoaded", () => {
+    const tabelaRelatorio = document.getElementById("tabelaRelatorio").getElementsByTagName("tbody")[0];
+    const totalValorElemento = document.getElementById("valorTotalDia");
+    const inputPlaca = document.getElementById("inputPlaca");
+
+    // Função para carregar e exibir o relatório
     function carregarRelatorio() {
-        const relatorio = JSON.parse(localStorage.getItem('relatorioEstacionamento')) || [];
-        relatorio.forEach(adicionarNaTabela);
+        const relatorio = JSON.parse(localStorage.getItem("relatorioEstacionamento")) || [];
+        relatorio.forEach((veiculo) => adicionarNaTabela(veiculo, tabelaRelatorio, "relatorio"));
+        calcularSoma(relatorio); // Calcula a soma ao carregar os dados
     }
 
-    function adicionarNaTabela(veiculo) {
-        const row = tabelaRelatorio.insertRow();
-        row.insertCell(0).innerText = veiculo.placa;
-        row.insertCell(1).innerText = veiculo.veiculo;
-        row.insertCell(2).innerText = veiculo.entrada;
-        row.insertCell(3).innerText = veiculo.saida;
-        row.insertCell(4).innerText = veiculo.valorPago;
+    // Função para calcular a soma dos valores pagos no dia
+    function calcularSoma(relatorio) {
+        let soma = 0;
+        relatorio.forEach(veiculo => {
+            const valor = parseFloat(veiculo.valorPago) || 0;
+            soma += valor;
+        });
+        totalValorElemento.innerText = formatarValor(soma.toFixed(2));
     }
 
+    // Função para exportar o relatório para CSV
+    function exportarParaCSV(dataHoje) {
+        let csvContent = "Placa;Veículo;Entrada;Saída;Valor Pago\r\n";
+    
+        // Adiciona cada linha da tabela ao conteúdo do CSV
+        const rows = tabelaRelatorio.querySelectorAll("tr");
+        rows.forEach(row => {
+            const cols = row.querySelectorAll("td");
+            const data = Array.from(cols).map(col => col.innerText.trim()).join(";");
+            csvContent += data + "\r\n";
+        });
+
+        // Adiciona o valor total ao final do CSV
+        const valorTotal = totalValorElemento.innerText.trim();
+        csvContent += `Total do Dia:;${valorTotal}\r\n`;
+
+        // Cria e baixa o arquivo CSV
+        const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = `relatorio_${dataHoje}.csv`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(link.href);
+    }
+
+    // Função para salvar e resetar o relatório
+    function salvarEResetar() {
+        const confirmacao = window.confirm("Tem certeza que deseja salvar e resetar o relatório?");
+        if (confirmacao) {
+            const hoje = new Date();
+            const dataHoje = `${hoje.getDate().toString().padStart(2, '0')}-${(hoje.getMonth() + 1).toString().padStart(2, '0')}-${hoje.getFullYear()}`;
+            
+            exportarParaCSV(dataHoje);
+
+            // Limpa o relatório do localStorage e da tabela
+            localStorage.setItem("relatorioEstacionamento", JSON.stringify([]));
+            tabelaRelatorio.innerHTML = ""; // Limpa a tabela de exibição
+            totalValorElemento.innerText = "0,00"; // Reseta o valor total
+
+            mostrarNotificacao("Relatório resetado e salvo com sucesso!");
+        } else {
+           mostrarNotificacao("Ação cancelada");
+        }
+    }
+
+    // Função para deletar um veículo do relatório
+    function deletarVeiculo(placa) {
+        let relatorio = JSON.parse(localStorage.getItem("relatorioEstacionamento")) || [];
+        relatorio = relatorio.filter(veiculo => veiculo.placa !== placa);
+        localStorage.setItem("relatorioEstacionamento", JSON.stringify(relatorio));
+
+        // Remove da tabela
+        const rows = tabelaRelatorio.rows;
+        for (let i = 0; i < rows.length; i++) {
+            if (rows[i].cells[0].innerText === placa) {
+                tabelaRelatorio.deleteRow(i);
+                break;
+            }
+        }
+
+        // Recalcula a soma após a remoção
+        calcularSoma(relatorio);
+        mostrarNotificacao("Veículo deletado com sucesso!");
+    }
+
+    // Funções de navegação
     function voltar() {
-        window.location.href = 'registro.html';
+        window.location.href = "registro.html";
     }
 
     function administrador() {
-        window.location.href = 'admin.html';
+        window.location.href = "admin.html";
     }
 
     function imprimir() {
         window.print();
     }
 
-    function exportarParaCSV() {
-        let csvContent = "data:text/csv;charset=utf-8,";
-        const rows = document.querySelectorAll("table tr");
-        
-        rows.forEach(row => {
-            const cols = row.querySelectorAll("td, th");
-            const data = Array.from(cols).map(col => col.innerText).join(";");
-            csvContent += data + "\r\n";
-        });
-
-        const encodedUri = encodeURI(csvContent);
-        const link = document.createElement("a");
-        link.setAttribute("href", encodedUri);
-        link.setAttribute("download", "teste.csv");
-        document.body.appendChild(link);
-        link.click();
-    }
-
-    document.getElementById('btnVoltar').addEventListener('click', voltar);
-    document.getElementById('btnAdmin').addEventListener('click', administrador);
-    document.getElementById('btnImprimir').addEventListener('click', imprimir);
-    document.getElementById('btnExportarCSV').addEventListener('click', exportarParaCSV);
-    document.getElementById('btnDeletar').addEventListener('click', () => {
-        const placa = document.getElementById('inputPlaca').value;
+    // Eventos dos botões
+    document.getElementById("btnVoltar").addEventListener("click", voltar);
+    document.getElementById("btnAdmin").addEventListener("click", administrador);
+    document.getElementById("btnImprimir").addEventListener("click", imprimir);
+    document.getElementById("btnExportarCSV").addEventListener("click", () => {
+        const dataHoje = new Date().toLocaleDateString("pt-BR").replace(/\//g, "-");
+        exportarParaCSV(dataHoje);
+    });
+    document.getElementById("btnSalvar").addEventListener("click", salvarEResetar);
+    
+    // Evento do botão Deletar, com reset no campo de entrada
+    document.getElementById("btnDeletar").addEventListener("click", () => {
+        const placa = inputPlaca.value;
         if (placa) {
             deletarVeiculo(placa);
+            inputPlaca.reset(); // Reset do campo de entrada
+            console.log("Campo de entrada de placa resetado"); // Log para verificar
         } else {
-            alert('Por favor, digite a placa do veículo');
+            mostrarNotificacao("Por favor, digite a placa do veículo");
         }
     });
 
+    // Carrega o relatório ao abrir a página
     carregarRelatorio();
-
-    async function deletarVeiculo(placa) {
-        try {
-            const response = await fetch(`http://localhost:3000/removerVeiculo/${placa}`, {
-                method: 'DELETE',
-            });
-
-            if (!response.ok) {
-                throw new Error('Erro ao deletar veículo do banco de dados');
-            }
-
-            // Remover do localStorage
-            let relatorio = JSON.parse(localStorage.getItem('relatorioEstacionamento')) || [];
-            relatorio = relatorio.filter(veiculo => veiculo.placa !== placa);
-            localStorage.setItem('relatorioEstacionamento', JSON.stringify(relatorio));
-
-            // Remover da tabela
-            const rows = tabelaRelatorio.rows;
-            for (let i = 0; i < rows.length; i++) {
-                if (rows[i].cells[0].innerText === placa) {
-                    tabelaRelatorio.deleteRow(i);
-                    break;
-                }
-            }
-
-            alert('Veículo deletado com sucesso!');
-        } catch (error) {
-            console.error('Erro:', error);
-            alert('Erro ao deletar veículo');
-        }
-    }
-  
 });
