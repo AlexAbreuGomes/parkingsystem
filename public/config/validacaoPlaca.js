@@ -11,4 +11,4 @@ export function validaPlacaBrasil(placa) {
     ];
   
     return padroes.some(padrao => padrao.test(placa));
-  }
+  } 

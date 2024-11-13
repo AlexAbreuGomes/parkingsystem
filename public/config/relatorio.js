@@ -5,6 +5,7 @@ import { exportarParaCSV } from "./exportaCsvRelatorio.js";
 import { voltar,administrador,imprimir } from "./navegacaoEntrePaginas.js";
 import { carregarRelatorio } from "./carregarRelatorio.js";
 
+
 document.addEventListener("DOMContentLoaded", () => {
     const tabelaRelatorio = document.getElementById("tabelaRelatorio").getElementsByTagName("tbody")[0];
     const totalValorElemento = document.getElementById("valorTotalDia");
