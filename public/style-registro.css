@@ -64,10 +64,10 @@ Por fim, a propriedade pointer-events é definida como none, para garantir que a
     justify-content: flex-start;
     width: min(300px, 20vw); /* Usa 20% da largura da tela, limitado a 200px */
     height: min(810px, 98vh); /* Usa 80% da altura da tela, limitado a 660px */
-    background-color: #DAFFEF;
+    background-color: #F3F3E0;
     border-radius: 10px;
     border: 1px solid #1B2CC1;
-    box-shadow: 0 0 10px #DAFFEF;
+    box-shadow: 0 0 10px #F3F3E0;
     margin-bottom: -90px;
     gap: 1vh; /* Espaçamento entre elementos relativo à altura da tela */
 }
@@ -113,17 +113,17 @@ input {
     height: 50px;
     border-radius: 10px;
     border: none;
-    background-color: #48BEFF;
+    background-color: #133E87;
     font-size: 20px;
-    color:#091540;
+    color:#CBDCEB;
     font-weight:700;
     cursor: pointer;
     transition: background-color 0.1s, color 0.1s; /* Transição suave para o efeito hover */
 }
 
 .submit:hover, .relatorio:hover, .submitReload:hover, .administrador:hover {
-    background-color: #091540; /* Cor de fundo ao passar o mouse */
-    color: #48BEFF; /* Cor do texto ao passar o mouse */
+    background-color: #CBDCEB; /* Cor de fundo ao passar o mouse */
+    color: #133E87; /* Cor do texto ao passar o mouse */
     border: 1px solid #091540;}
 
 a {
