@@ -1,9 +1,9 @@
 body {
   font-family: 'Poppins', sans-serif;
-  background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)), url("estacionamento.png");
+  background: linear-gradient(rgba(9, 21, 64, 0.9), rgba(9, 21, 64, 0.9)), url("estacionamento.png");
   background-size: cover;
   position: relative;
-  background-color: rgba(0, 0, 0, 0.9);
+  background-color: rgb(9, 21, 64,0.95); /* Define a cor de fundo com opacidade */
   margin: 0;
   height: 100vh;
 }
@@ -11,23 +11,23 @@ body {
 /* Estilo para o valor total */
 #valorTotal {
   font-size: 24px;
-  color: #EEE5E9;
+  color: #091540;
   font-weight: bold;
   padding: 10px;
-  background-color: #000;
+  background-color: #48BEFF;
   border-radius: 10px;
   border: 2px solid #383D3B;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 90%;
+  width: 80%;
   max-width: 1220px;
   text-align: center;
 }
 
 #valorTotal strong {
   font-size: 1.5em;
-  color: #00f5d0;
+  color: #091540;
 }
 
 
@@ -39,7 +39,7 @@ body {
   position: absolute;
   top: 50%;
   left: 50%;
-  gap: 20px;
+  gap: 0px;
   transform: translate(-50%, -50%);
 }
 
@@ -54,22 +54,23 @@ h1 {
   flex-direction: row;
   align-items: center;
   justify-content: flex-end;
-  width: 90%;
-  max-width: 1220px;
-  height: 50px;
+  width: 100%;
+  
+  height: 90px;
   gap: 10px;
-  background-color: #c0c0c0;
-  border-right: 1px solid #00f5d0;
+  background-color: #DAFFEF;
+  border-right: 1px solid #DAFFEF;
   border-radius: 10px;
   padding: 10px;
 }
 
 button {
-  width: 160px;
-  height: 30px;
+  width: 200px;
+  height: 50px;
   border-radius: 10px;
-  background-color: #000;
-  color: #EEE5E9;
+  background-color: #48BEFF;
+  color: #091540;
+  font-size: 20px;
   font-weight: bold;
   border: none;
 }
@@ -79,40 +80,40 @@ button {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  width: 90%;
-  max-width: 1220px;
+  width: 100%;
+  
   gap: 10px;
   margin: 20px 0;
 }
 
 #inputPlaca {
   width: 200px;
-  height: 30px;
+  height: 50px;
   border-radius: 10px;
-  padding: 5px;
-  border: 1px solid #383D3B;
+  padding: 10px;
+  border: 1px solid #091540;
 }
 
 #btnDeletar {
-  width: 160px;
-  height: 30px;
+  width: 200px;
+  height: 50px;
   border-radius: 10px;
-  background-color: #000;
-  color: #EEE5E9;
+  background-color: #48BEFF;
+  color: #091540;
   font-weight: bold;
   border: none;
 }
 
 #btnDeletar:hover {
-  background-color: #00f5d0; /* Cor de fundo ao passar o mouse */
-  color: #000; /* Cor do texto ao passar o mouse */
-  border: 1px solid #383D3B;
+  background-color: #091540; /* Cor de fundo ao passar o mouse */
+  color: #48BEFF; /* Cor do texto ao passar o mouse */
+  border: 1px solid #091540;
 }
 
 button:hover {
-  background-color: #00f5d0; /* Cor de fundo ao passar o mouse */
-  color: #000; /* Cor do texto ao passar o mouse */
-  border: 1px solid #383D3B;
+  background-color: #091540; /* Cor de fundo ao passar o mouse */
+  color: #48BEFF; /* Cor do texto ao passar o mouse */
+  border: 1px solid #091540;
 }
 
 #tabelaRelatorio {
@@ -120,13 +121,13 @@ button:hover {
   flex-direction: column;
   align-items: center;
   justify-content: start;
-  width: 90%;
+  width: 100%;
   max-width: 1220px;
   height: 600px;
-  border: 1px solid #383D3B;
-  background-color: #c0c0c0;
+  border: 1px solid #091540;
+  background-color: #DAFFEF;
   border-radius: 10px;
-  box-shadow: 0 0 10px #c0c0c0;
+  box-shadow: 0 0 10px #DAFFEF;
   overflow-y: auto;
 }
 
@@ -139,24 +140,24 @@ button:hover {
 
 #tabelaRelatorio::-webkit-scrollbar-track {
   width: 5px;
-  background: #c0c0c0; /* cor da trilha da barra de rolagem */
+  background: #DAFFEF; /* cor da trilha da barra de rolagem */
   border-top-right-radius: 10px; /* radius da trilha */
   border-bottom-right-radius: 10px;
 }
 
 #tabelaRelatorio::-webkit-scrollbar-thumb {
-  background-color:  #000000; /* cor do polegar da barra de rolagem */
+  background-color:  #091540; /* cor do polegar da barra de rolagem */
   border-radius: 20px; /* radius do polegar */
-  border: 2px solid #EEE5E9; /* borda ao redor do polegar */
+  border: 2px solid #DAFFEF; /* borda ao redor do polegar */
 }
 
 #tabelaEstacionados {
   width: 100%;
-  height: 300px;
+  height: 500px;
   text-align: center;
   border-collapse: collapse;
   border-radius: 10px;
-  box-shadow: 0 0 10px #000000;
+  box-shadow: 0 0 10px #091540;
 }
 
 tr {
@@ -167,9 +168,9 @@ tr {
   text-align: center;
   width: 1200px;
   height: 40px;
-  font-size: 15px;
+  font-size: 20px;
   font-weight: 700;
-  color: #141414;
+  color: #091540;
 }
 
 td {
@@ -181,9 +182,9 @@ td {
   height: 40px;
   font-size: 15px;
   font-weight: 700;
-  color: #000000;
-  background-color: #c0c0c0;
-  border: 1px solid #383D3B;
+  color: #091540;
+  background-color: #48BEFF;
+  border: 1px solid #091540;
 }
 
 /* Seleciona a última linha da tabela */
@@ -220,7 +221,7 @@ tr:last-child td:last-child {
       display: none; /* Oculta elementos que não devem ser impressos */
   }
   body {
-      background: white;
+      background: #48BEFF;
       color: black;
       margin: 10px;
   }
