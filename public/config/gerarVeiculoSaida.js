@@ -1,12 +1,10 @@
 // gerarVeiculoSaida.js
-import { formatarData } from "./formatarData.js";
-
 export function gerarVeiculoSaida(veiculo, saida, valorPago) {
     return {
         placa: veiculo.placa,
         veiculo: veiculo.veiculo,
-        entrada: formatarData(veiculo.entrada),
-        saida: formatarData(saida),
+        entrada: new Date(veiculo.entrada).getTime(), // Salva o timestamp
+        saida: new Date(saida).getTime(), // Salva o timestamp
         valorPago
     };
 }

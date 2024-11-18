@@ -6,34 +6,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="reset.css">
     <link rel="stylesheet" href="style-relatorio.css">
+    <link rel="stylesheet" href="style-notificacao.css">
     <title>Relatório de Estacionamento</title>
-    <!-- Importando a biblioteca jsPDF -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script> -->
 </head>
 
 <body>
+    
+
     <h1>Relatório de Estacionamento</h1>
-    
-    <!-- Seção para mostrar o valor total apurado no dia -->
-   
-        
-    
 
     <main class="principal">
         <!-- Botões de navegação e ações -->
         <section id="botoes">
+            <button id="btnDeletar">Deletar Veículo</button>
             <button id="btnVoltar">Voltar</button>
             <button id="btnAdmin">Administrador</button>
             <button id="btnImprimir">Imprimir</button>
             <button id="btnExportarCSV">Exportar para CSV</button>
-            <button id="btnSalvar">Salvar e Resetar</button> <!-- Novo botão -->
+            <button id="btnSalvar">Salvar <br>Banco de Dados</button> <!-- Novo botão -->
+            <button id="btnReset">Resetar</button> <!-- Novo botão -->
+            
         </section>
 
         <!-- Seção para deletar um veículo -->
         <section id="deletarVeiculo">
-            <input type="text" id="inputPlaca" placeholder="Digite a placa do veículo">
-            <button id="btnDeletar">Deletar Veículo</button>
+            <input type="text" id="inputPlaca" placeholder="Deletar veiculo">
+            
             <h2 id="valorTotal">Total do Dia: R$ <span id="valorTotalDia">0,00</span></h2>
+            <div id="notification"></div>
         </section>
 
         <!-- Tabela do relatório -->
@@ -53,8 +53,20 @@
         </table>
     </main>
 
+    <!-- Modal para solicitação de senha -->
+    <div id="modalSenha" class="modal">
+        <div class="modal-content">
+            <h2>Digite a senha</h2>
+            <input type="password" id="inputSenha" class="input-senha" placeholder="Senha">
+            <br><br>
+            <button id="btnConfirmarSenha" class="btn">Confirmar</button>
+            <button id="btnCancelarSenha" class="btn">Cancelar</button>
+        </div>
+    </div>
+    
+
     <!-- Certifique-se de que o script seja carregado no final do body -->
     <script type="module" src="config/relatorio.js"></script>
-    
 </body>
+
 </html>
