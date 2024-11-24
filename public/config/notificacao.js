@@ -1,5 +1,4 @@
 // public/notificacao.js
-
 export function mostrarNotificacao(mensagem) {
     const notification = document.getElementById("notification");
     notification.innerText = mensagem;

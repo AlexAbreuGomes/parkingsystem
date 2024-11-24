@@ -56,7 +56,7 @@ h1 {
   justify-content: flex-end;
   width: 90%;
   max-width: 1220px;
-  height: 50px;
+  height: 80px;
   gap: 10px;
   background-color: #c0c0c0;
   border-right: 1px solid #00f5d0;
@@ -65,8 +65,8 @@ h1 {
 }
 
 button {
-  width: 160px;
-  height: 30px;
+  width: 200px;
+  height: 50px;
   border-radius: 10px;
   background-color: #000;
   color: #EEE5E9;
@@ -87,15 +87,15 @@ button {
 
 #inputPlaca {
   width: 200px;
-  height: 30px;
+  height:58px;
   border-radius: 10px;
   padding: 5px;
   border: 1px solid #383D3B;
 }
 
 #btnDeletar {
-  width: 160px;
-  height: 30px;
+  width: 200px;
+  height: 50px;
   border-radius: 10px;
   background-color: #000;
   color: #EEE5E9;
@@ -194,6 +194,68 @@ tr:last-child td:first-child {
 tr:last-child td:last-child {
   border-bottom-right-radius: 10px; 
 }
+
+/* Estilos do modal */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  width: 300px;
+}
+
+.input-senha {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+}
+
+.btn-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px; /* Adiciona espaço entre os botões */
+  margin-top: 20px; /* Espaço entre o campo de senha e os botões */
+}
+
+.btn {
+  width: 200px;
+  height: 50px;
+  border-radius: 10px;
+  background-color: #000;
+  color: #EEE5E9;
+  font-weight: bold;
+  border: none;
+  margin-bottom: 10px;
+  padding: 10px 20px;
+}
+
+/* Adicional, para ajustar o layout ao tamanho da tela */
+@media (max-width: 500px) {
+  .modal-content {
+      width: 90%;
+  }
+
+  .btn {
+      width: 100%; /* Tornar os botões 100% de largura em telas pequenas */
+  }
+}
+
+
+
+
 
 /* Estilos de impressão */
 @media print {
